@@ -1,0 +1,15 @@
+<apex:page standardController="Job_Application__c" recordSetVar="applications">
+    <apex:pageBlock title="All Job Applications">
+        <apex:pageBlockTable value="{!applications}" var="app">
+            <apex:column >
+                <apex:facet name="header">
+              Application
+         </apex:facet>
+                <apex:outputLink title="Go to job application details" value="/lightning/r/Job_Application__c/{!app.id}/view">{!app.Name}</apex:outputLink>
+            </apex:column>
+            <apex:column value="{!app.Position__c}"/>
+            <apex:column value="{!app.Status__c}"/>
+            <apex:column value="{!app.Rating__c}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>
