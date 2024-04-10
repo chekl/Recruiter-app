@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Avoid_Recruiter_Modify</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Avoid Recruiter Modify</label>
+        <sharedTo>
+            <group>No_Recruiters</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>No_Recruiters</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Position__c</fullName>
+    <externalId>false</externalId>
+    <label>Position</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Only open positions</errorMessage>
+        <filterItems>
+            <field>Position__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Position__c</referenceTo>
+    <relationshipLabel>Job Applications</relationshipLabel>
+    <relationshipName>Job_Applications</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

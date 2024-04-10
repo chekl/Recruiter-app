@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reviewer__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Reviewer</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage
+    >Reviewer can be only interviewer or recruiter</errorMessage>
+        <filterItems>
+            <field>Account.Owner.UserRoleId</field>
+            <operation>notEqual</operation>
+            <value>F00EQy000003KyaH</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Reviews</relationshipLabel>
+    <relationshipName>Reviews</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
