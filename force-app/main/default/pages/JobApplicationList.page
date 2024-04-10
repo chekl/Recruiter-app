@@ -3,7 +3,7 @@
         <apex:pageBlockTable value="{!applications}" var="app">
             <apex:column >
                 <apex:facet name="header">
-              Application
+              {!$Label.Job_Application}
          </apex:facet>
                 <apex:outputLink title="Go to job application details" value="/lightning/r/Job_Application__c/{!app.id}/view">{!app.Name}</apex:outputLink>
             </apex:column>

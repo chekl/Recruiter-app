@@ -3,5 +3,5 @@
     <apiVersion>60.0</apiVersion>
     <availableInTouch>true</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>JobApplicationList</label>
+    <label>Job Application List</label>
 </ApexPage>
