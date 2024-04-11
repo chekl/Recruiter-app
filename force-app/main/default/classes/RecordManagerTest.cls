@@ -79,6 +79,10 @@ private class RecordManagerTest {
     );
     Test.stopTest();
 
+    Assert.areNotEqual(
+      true, result == Null || result.isEmpty(), 'Result cannot be empty!'
+    );
+
     for (List<SObject> sub : result) {
       Assert.areEqual(
         4,

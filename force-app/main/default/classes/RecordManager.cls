@@ -1,5 +1,5 @@
 public with sharing class RecordManager {
-  public static final String RECRUITER = 'Recruiter';
+  private static final String RECRUITER = 'Recruiter';
 
   public static List<Job_Application__c> selectJobApplicationsWithReviewsCreatedLastWeek() {
     return [
