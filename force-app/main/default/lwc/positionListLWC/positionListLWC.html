@@ -1,0 +1,42 @@
+<template>
+  <div class="slds">
+  <lightning-card hide-header>
+    <div class="page-header">
+      <h1>{pageTitleLabel}</h1>
+    </div>
+    <div class="page-filter">
+    <lightning-combobox
+    class="page-filter-select"
+      name="selectedStatus"
+      label={statusLabel}
+      value={selectedStatus}
+      options={options}
+      onchange={handleStatusChange}
+    ></lightning-combobox>
+    <lightning-button
+      variant="brand"
+      label={saveLabel}
+      title={saveTitleLabel}
+      onclick={handleSave}
+    ></lightning-button>
+    </div>
+    <template if:true={error}>
+      <p>{error}</p>
+    </template>
+    <template if:true={positions.length}>
+      <c-custom-dt-type-lwc
+        class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+        key-field="Id"
+        data={positions}
+        columns={columns}
+        oncellchange={handleCellChange}
+        suppress-bottom-bar
+        hide-checkbox-column
+      ></c-custom-dt-type-lwc>
+    </template>
+    <template if:false={positions.length}>
+      <p class="page-empty-list">{emptyListLabel}</p>
+    </template>
+  </lightning-card>
+</div>
+</template>
