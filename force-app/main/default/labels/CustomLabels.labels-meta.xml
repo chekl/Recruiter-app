@@ -1,10 +1,122 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>All</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>All</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>All_Job_Applications</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>All Job Applications</shortDescription>
+        <value>All Job Applications</value>
+    </labels>
+    <labels>
+        <fullName>Closed_Date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Closed Date</shortDescription>
+        <value>Closed Date</value>
+    </labels>
+    <labels>
+        <fullName>Empty_List</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Empty List</shortDescription>
+        <value>There are no records!</value>
+    </labels>
+    <labels>
+        <fullName>Go_To_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Go To Details</shortDescription>
+        <value>Go to details</value>
+    </labels>
     <labels>
         <fullName>Job_Application</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Job Application</shortDescription>
         <value>Job Application</value>
+    </labels>
+    <labels>
+        <fullName>Max_Pay</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Max Pay</shortDescription>
+        <value>Max Pay</value>
+    </labels>
+    <labels>
+        <fullName>Min_Pay</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Min Pay</shortDescription>
+        <value>Min Pay</value>
+    </labels>
+    <labels>
+        <fullName>Open_Date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Open Date</shortDescription>
+        <value>Open Date</value>
+    </labels>
+    <labels>
+        <fullName>Positions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Positions</shortDescription>
+        <value>Positions</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>Save_Positions_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save Positions Title</shortDescription>
+        <value>Save changed positions</value>
+    </labels>
+    <labels>
+        <fullName>Status</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>Status_Closed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status Closed</shortDescription>
+        <value>Closed</value>
+    </labels>
+    <labels>
+        <fullName>Status_Open</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status Open</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>Status_Pending</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status Pending</shortDescription>
+        <value>Pending</value>
+    </labels>
+    <labels>
+        <fullName>Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title</shortDescription>
+        <value>Title</value>
     </labels>
 </CustomLabels>
