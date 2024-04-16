@@ -29,9 +29,11 @@ public with sharing class PositionsListWithController {
       WHERE Status__c IN :statusFilter
     ];
   }
+  
   public PositionsListWithController() {
     getPositionsList();
   }
+
   public List<SelectOption> getStatuses() {
     return statuses;
   }

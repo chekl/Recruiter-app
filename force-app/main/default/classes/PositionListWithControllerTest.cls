@@ -19,52 +19,37 @@ private class PositionListWithControllerTest {
   }
 
   @isTest
-  static void testGetPositions() {
+  static void testGetPositionsList() {
     PositionsListWithController controller = new PositionsListWithController();
     controller.selectedStatus = 'Closed';
-    List<Position__c> positions = controller.getPositions();
+    controller.getPositionsList();
 
-    Assert.areNotEqual(null, positions, 'Positions are null for Closed status');
+    Assert.areNotEqual(null, controller.positions, 'Positions are null for Closed status');
     Assert.areEqual(
       1,
-      positions.size(),
+      controller.positions.size(),
       'The expected size of Closed positions is 1, but instead get: ' +
-      positions.size()
+      controller.positions.size()
     );
     Assert.areEqual(
       'Closed',
-      positions[0].Status__c,
+      controller.positions[0].Status__c,
       'The expected status is Closed, but instead get: ' +
-      positions[0].Status__c
+      controller.positions[0].Status__c
     );
 
     controller.selectedStatus = '';
-    positions = controller.getPositions();
-
-    Assert.areNotEqual(null, positions, 'Positions are null for all statuses');
-    Assert.areEqual(3, positions.size(), 'size2');
-  }
-
-  @isTest
-  static void testGetPositionsList() {
-    PositionsListWithController controller = new PositionsListWithController();
-    controller.selectedStatus = 'Open';
     controller.getPositionsList();
 
-    Assert.areNotEqual(null, controller.positions, 'Positions are null');
-    Assert.areEqual(
-      'Open',
-      controller.positions[0].Status__c,
-      'The expected status is Open, but instead get: ' +
-      controller.positions[0].Status__c
-    );
+    Assert.areNotEqual(null, controller.positions, 'Positions are null for all statuses');
+    Assert.areEqual(3, controller.positions.size(), 'The expected size of all positions is 3, but instead get: ' +
+    controller.positions.size());
   }
 
   @isTest
   static void testSave() {
     PositionsListWithController controller = new PositionsListWithController();
-
-    controller.getPositions();
+    controller.getPositionsList();
 
     controller.positions[0].Status__c = 'Closed';
 
