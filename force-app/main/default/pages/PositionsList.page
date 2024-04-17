@@ -1,0 +1,40 @@
+<apex:page controller="PositionsListWithController" tabstyle="Position__c">
+  <apex:form>
+    <apex:pageBlock mode="edit">
+      {!$Label.Status}
+      <apex:selectList value="{!selectedStatus}" size="1">
+        <apex:selectOptions value="{!statuses}" />
+        <apex:actionSupport
+          event="onchange"
+          action="{!getPositionsList}"
+          reRender="position_list"
+        />
+      </apex:selectList>
+
+      <apex:outputPanel id="position_list">
+        <apex:pageBlockTable
+          value="{!positions}"
+          var="pos"
+          rendered="{!positions.size > 0}"
+          columnsWidth="40%, 20%, 10%, 10%, 10%, 10%"
+        >
+          <apex:column value="{!pos.Title__c}" />
+          <apex:column>
+            <apex:facet name="header"> {!$Label.Status} </apex:facet>
+            <apex:inputField value="{!pos.Status__c}" />
+          </apex:column>
+          <apex:column value="{!pos.Open_Date__c}" />
+          <apex:column value="{!pos.Closed_Date__c}" />
+          <apex:column value="{!pos.Max_Pay__c}" />
+          <apex:column value="{!pos.Min_Pay__c}" />
+        </apex:pageBlockTable>
+        <apex:outputText rendered="{!positions.size = 0}">
+          <p>{!$Label.Empty_List}</p>
+        </apex:outputText>
+      </apex:outputPanel>
+      <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!save}" value="{!$Label.Save}" />
+      </apex:pageBlockButtons>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>
