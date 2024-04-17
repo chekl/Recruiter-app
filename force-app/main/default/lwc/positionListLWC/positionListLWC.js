@@ -47,7 +47,7 @@ const columns = [
 ];
 
 export default class PositionsList extends LightningElement {
-  label = {
+  labels = {
     Positions,
     Empty_List,
     Status,
@@ -61,7 +61,7 @@ export default class PositionsList extends LightningElement {
   positionStatus = [];
   @track selectedStatus = "";
 
-  @api pageSize = 5;
+  @api pageSize = 200;
   currentPage = 1;
   wiredActivities;
 
@@ -110,7 +110,7 @@ export default class PositionsList extends LightningElement {
   }
 
   @wire(getCountPositions, {
-    status: "$selectedStatus"
+    status: "$selectedStatus",
   })
   positionCount;
 
@@ -126,6 +126,7 @@ export default class PositionsList extends LightningElement {
 
   handleStatusChange(event) {
     this.selectedStatus = event.target.value;
+    this.currentPage = 1;
   }
 
   handleCellChange(event) {

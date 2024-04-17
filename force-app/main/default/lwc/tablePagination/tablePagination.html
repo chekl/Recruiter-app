@@ -3,13 +3,13 @@
     <lightning-button
       disabled={isFirstPage}
       icon-name="utility:chevronleft"
-      label={label.Previous}
+      label={labels.Previous}
       onclick={previousPage}
       class="slds-p-right_small"
     ></lightning-button>
     <template for:each={totalPages} for:item="page">
       <lightning-button
-        disabled={page.isCurrent}
+        disabled={pages.isCurrent}
         key={page.value}
         label={page.value}
         data-value={page.value}
@@ -20,7 +20,7 @@
     <lightning-button
       disabled={isLastPage}
       icon-name="utility:chevronright"
-      label={label.Next}
+      label={labels.Next}
       onclick={nextPage}
       icon-position="right"
     ></lightning-button>

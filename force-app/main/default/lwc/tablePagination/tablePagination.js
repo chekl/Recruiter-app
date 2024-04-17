@@ -4,16 +4,15 @@ import Previous from "@salesforce/label/c.Previous";
 
 export default class TablePagination extends LightningElement {
   @api totalrecords;
-  totalPages = [];
   totalPagesSize = 0;
   @api pagenumber = 1;
   @api pagesize;
 
-  label = {Next, Previous};
+  labels = {Next, Previous};
 
-  connectedCallback() {
+  get totalPages() {
     this.totalPagesSize = Math.ceil(this.totalrecords / this.pagesize);
-    this.totalPages = Array.from(
+    return Array.from(
       { length: this.totalPagesSize },
       (_, index) => {
         return { value: index + 1, isCurrent: index + 1 === this.pagenumber };
@@ -21,7 +20,9 @@ export default class TablePagination extends LightningElement {
     );
   }
 
+
   refreshActivePage(page) {
+    console.log("totalrecords", this.totalrecords);
     this.totalPages.forEach((item) => {
       item.isCurrent = item.value === page;
     });
