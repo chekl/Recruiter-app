@@ -11,6 +11,10 @@ export default class TablePagination extends LightningElement {
   labels = {Next, Previous};
 
   get totalPages() {
+    return this.calculateTotalPages();
+  }
+
+  calculateTotalPages() {
     this.totalPagesSize = Math.ceil(this.totalrecords / this.pagesize);
     return Array.from(
       { length: this.totalPagesSize },
@@ -20,9 +24,7 @@ export default class TablePagination extends LightningElement {
     );
   }
 
-
   refreshActivePage(page) {
-    console.log("totalrecords", this.totalrecords);
     this.totalPages.forEach((item) => {
       item.isCurrent = item.value === page;
     });

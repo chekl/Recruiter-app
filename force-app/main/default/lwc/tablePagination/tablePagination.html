@@ -9,7 +9,7 @@
     ></lightning-button>
     <template for:each={totalPages} for:item="page">
       <lightning-button
-        disabled={pages.isCurrent}
+        disabled={page.isCurrent}
         key={page.value}
         label={page.value}
         data-value={page.value}
