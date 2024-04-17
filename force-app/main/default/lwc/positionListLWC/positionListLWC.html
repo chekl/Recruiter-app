@@ -1,12 +1,12 @@
 <template>
   <div class="slds">
     <lightning-card hide-header>
-      <div class="page-header">
+      <div class="positions-list-header">
         <h1>{label.Positions}</h1>
       </div>
-      <div class="page-filter">
+      <div class="positions-list-filter">
         <lightning-combobox
-          class="page-filter-select"
+          class="positions-list-filter-select"
           name="selectedStatus"
           label={label.Status}
           value={selectedStatus}
@@ -32,7 +32,7 @@
         ></c-custom-dt-type-lwc>
       </template>
       <template if:false={positions.length}>
-        <p class="page-empty-list">{label.Empty_List}</p>
+        <p class="positions-list-is-empty">{label.Empty_List}</p>
       </template>
     </lightning-card>
   </div>

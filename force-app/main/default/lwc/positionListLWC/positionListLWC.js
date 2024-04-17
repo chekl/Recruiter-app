@@ -4,7 +4,7 @@ import updatePositions from "@salesforce/apex/PositionsListWithControllerLWC.upd
 
 import { getObjectInfo } from "lightning/uiObjectInfoApi";
 import { getPicklistValues } from "lightning/uiObjectInfoApi";
-import POSITION__C_OBJECT from "@salesforce/schema/Position__c.Status__c";
+import POSITION__C_OBJECT from "@salesforce/schema/Position__c";
 import STATUS__C_FIELD from "@salesforce/schema/Position__c.Status__c";
 import { refreshApex } from "@salesforce/apex";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
@@ -85,7 +85,7 @@ export default class PositionsList extends LightningElement {
     this.wiredActivities = value;
     const { data, error } = value;
     if (data) {
-      let options = this.positionStatus.map((picklistValue) => ({
+      const options = this.positionStatus.map((picklistValue) => ({
         label: picklistValue.label,
         value: picklistValue.value
       }));

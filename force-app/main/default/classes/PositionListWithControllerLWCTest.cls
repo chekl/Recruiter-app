@@ -3,10 +3,10 @@ private class PositionListWithControllerLWCTest {
   @TestSetup
   static void makeData() {
     Test.startTest();
-    List<Position__c> pos = new List<Position__c>();
+    List<Position__c> positions = new List<Position__c>();
     List<String> statuses = new List<String>{ 'Open', 'Closed', 'Pending' };
     for (String status : statuses) {
-      pos.add(
+        positions.add(
         new Position__c(
           Title__c = 'Position',
           Status__c = status,
@@ -14,17 +14,19 @@ private class PositionListWithControllerLWCTest {
         )
       );
     }
-    insert pos;
+    insert positions;
     Test.stopTest();
   }
 
   @isTest
   static void testUpdatePositions() {
-    List<Position__c> pos = PositionsListWithControllerLWC.getPositions('');
-    pos[0].Title__c = 'New Title';
-    PositionsListWithControllerLWC.updatePositions(pos);
+    Test.startTest();
+    List<Position__c> positions = PositionsListWithControllerLWC.getPositions('');
+    positions[0].Title__c = 'New Title';
+    PositionsListWithControllerLWC.updatePositions(positions);
+    Test.stopTest();
 
-    List<Position__c> updatedPos = [
+    List<Position__c> updatedPositions = [
       SELECT Id, Title__c
       FROM Position__c
       WHERE Title__c = 'New Title'
@@ -32,33 +34,36 @@ private class PositionListWithControllerLWCTest {
 
     Assert.areEqual(
       1,
-      updatedPos.size(),
+      updatedPositions.size(),
       'The expected size of updated positions is 1, but instead get: ' +
-      updatedPos.size()
+      updatedPositions.size()
     );
   }
 
   @isTest
   static void testGetPositions() {
-    List<Position__c> pos = PositionsListWithControllerLWC.getPositions('');
+    Test.startTest();
+    List<Position__c> positions = PositionsListWithControllerLWC.getPositions('');
+    Test.stopTest();
+
     Assert.areEqual(
       3,
-      pos.size(),
-      'The expected size of all positions is 3, but instead get: ' + pos.size()
+      positions.size(),
+      'The expected size of all positions is 3, but instead get: ' + positions.size()
     );
 
-    pos = PositionsListWithControllerLWC.getPositions('Closed');
+    positions = PositionsListWithControllerLWC.getPositions('Closed');
     Assert.areEqual(
       1,
-      pos.size(),
+      positions.size(),
       'The expected size of Closed positions is 1, but instead get: ' +
-      pos.size()
+      positions.size()
     );
     Assert.areEqual(
       'Closed',
-      pos[0].Status__c,
+      positions[0].Status__c,
       'The expected value of Status__c positions is Closed, but instead get: ' +
-      pos[0].Status__c
+      positions[0].Status__c
     );
   }
 }
