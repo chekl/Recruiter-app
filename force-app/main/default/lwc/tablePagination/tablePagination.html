@@ -1,0 +1,28 @@
+<template>
+  <div class="slds-align_absolute-center">
+    <lightning-button
+      disabled={isFirstPage}
+      icon-name="utility:chevronleft"
+      label={label.Previous}
+      onclick={previousPage}
+      class="slds-p-right_small"
+    ></lightning-button>
+    <template for:each={totalPages} for:item="page">
+      <lightning-button
+        disabled={page.isCurrent}
+        key={page.value}
+        label={page.value}
+        data-value={page.value}
+        onclick={handleChangePage}
+        class="slds-p-right_small"
+      ></lightning-button>
+    </template>
+    <lightning-button
+      disabled={isLastPage}
+      icon-name="utility:chevronright"
+      label={label.Next}
+      onclick={nextPage}
+      icon-position="right"
+    ></lightning-button>
+  </div>
+</template>

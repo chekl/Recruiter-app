@@ -1,6 +1,6 @@
 <template>
   <div class="slds">
-    <lightning-card hide-header>
+    <lightning-card label={label.Positions} hide-header>
       <div class="positions-list-header">
         <h1>{label.Positions}</h1>
       </div>
@@ -30,6 +30,14 @@
           suppress-bottom-bar
           hide-checkbox-column
         ></c-custom-dt-type-lwc>
+        <c-table-pagination
+          totalrecords={positionCount.data}
+          pagesize={pageSize}
+          pagenumber={currentPage}
+          onnextpage={handleNextPage}
+          onpreviouspage={handlePreviousPage}
+          onchangepage={handleSetCurrentPage}
+        ></c-table-pagination>
       </template>
       <template if:false={positions.length}>
         <p class="positions-list-is-empty">{label.Empty_List}</p>

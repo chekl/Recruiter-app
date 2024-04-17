@@ -1,4 +1,4 @@
-import { LightningElement, wire, track } from "lwc";
+import { LightningElement, wire, track, api } from "lwc";
 import getPositions from "@salesforce/apex/PositionsListWithControllerLWC.getPositions";
 import updatePositions from "@salesforce/apex/PositionsListWithControllerLWC.updatePositions";
 
@@ -24,6 +24,7 @@ import Empty_List from "@salesforce/label/c.Empty_List";
 import Save from "@salesforce/label/c.Save";
 import Save_Positions_Title from "@salesforce/label/c.Save_Positions_Title";
 import Default_Error_Title from "@salesforce/label/c.Default_Error_Title";
+import getCountPositions from "@salesforce/apex/PositionsListWithControllerLWC.getCountPositions";
 
 const columns = [
   { label: Title, fieldName: "Title__c", type: "text" },
@@ -60,6 +61,8 @@ export default class PositionsList extends LightningElement {
   positionStatus = [];
   @track selectedStatus = "";
 
+  @api pageSize = 5;
+  currentPage = 1;
   wiredActivities;
 
   @wire(getObjectInfo, { objectApiName: POSITION__C_OBJECT })
@@ -77,8 +80,14 @@ export default class PositionsList extends LightningElement {
     }
   }
 
+  get pageOffset() {
+    return (this.currentPage - 1) * this.pageSize;
+  }
+
   @wire(getPositions, {
     status: "$selectedStatus",
+    pageSize: "$pageSize",
+    pageOffset: "$pageOffset",
     allStatuses: "$positionStatus"
   })
   Positions(value) {
@@ -99,6 +108,11 @@ export default class PositionsList extends LightningElement {
       this.showErrorToast(error);
     }
   }
+
+  @wire(getCountPositions, {
+    status: "$selectedStatus"
+  })
+  positionCount;
 
   handleSave() {
     updatePositions({
@@ -142,5 +156,17 @@ export default class PositionsList extends LightningElement {
       { label: Status_Closed, value: Status_Closed },
       { label: Status_Pending, value: Status_Pending }
     ];
+  }
+
+  handleNextPage() {
+    this.currentPage = this.currentPage + 1;
+  }
+
+  handlePreviousPage() {
+    this.currentPage = this.currentPage - 1;
+  }
+
+  handleSetCurrentPage(event) {
+    this.currentPage = event.detail;
   }
 }
