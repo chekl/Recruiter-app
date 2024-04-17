@@ -8,6 +8,13 @@
         <value>All</value>
     </labels>
     <labels>
+        <fullName>All_Job_Applications</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>All Job Applications</shortDescription>
+        <value>All Job Applications</value>
+    </labels>
+    <labels>
         <fullName>Closed_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -15,11 +22,25 @@
         <value>Closed Date</value>
     </labels>
     <labels>
+        <fullName>Default_Error_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Default Error Title</shortDescription>
+        <value>Something went wrong!</value>
+    </labels>
+    <labels>
         <fullName>Empty_List</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Empty List</shortDescription>
         <value>There are no records!</value>
+    </labels>
+    <labels>
+        <fullName>Go_To_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Go To Details</shortDescription>
+        <value>Go to details</value>
     </labels>
     <labels>
         <fullName>Job_Application</fullName>
