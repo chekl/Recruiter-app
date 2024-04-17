@@ -1,0 +1,23 @@
+.positions-list-header {
+  background-color: var(--slds-g-color-brand-base-30, #014486);
+  color: var(--slds-g-color-brand-base-100, #ffffff);
+  padding: 10px;
+  font-size: large;
+}
+
+.positions-list-filter {
+  display: flex;
+  align-items: end;
+  margin: 10px;
+  width: 200px;
+}
+
+.positions-list-filter-select {
+  flex-grow: 3;
+}
+
+.positions-list-is-empty {
+  margin-left: 10px;
+  font-weight: 700;
+  font-size: medium;
+}
