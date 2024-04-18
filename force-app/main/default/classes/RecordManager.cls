@@ -6,6 +6,7 @@ public with sharing class RecordManager {
       SELECT Id, Candidate__c, Position__c, (SELECT Id FROM Reviews__r)
       FROM Job_Application__c
       WHERE CreatedDate >= LAST_WEEK AND CreatedBy.Profile.Name = :RECRUITER
+      WITH SECURITY_ENFORCED
     ];
   }
 
