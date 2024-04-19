@@ -187,13 +187,13 @@ export default class PositionsList extends LightningElement {
 
   generateErrorMessage(error) {
     let message = '';
-            if (Array.isArray(error.body)) {
-              message = error.body.map(e => e.message).join(', ');
-          } 
+    
+    if (Array.isArray(error.body)) {
+      message = error.body.map(e => e.message).join(', ');
+    } else if (typeof error.body.message === 'string') {
+      message = error.body.message;
+    }
 
-          else if (typeof error.body.message === 'string') {
-            message = error.body.message;
-          }
-          return message;
+    return message;
   }
 }
