@@ -24,7 +24,11 @@ private class PositionListWithControllerTest {
     controller.selectedStatus = 'Closed';
     controller.getPositionsList();
 
-    Assert.areNotEqual(null, controller.positions, 'Positions are null for Closed status');
+    Assert.areNotEqual(
+      null,
+      controller.positions,
+      'Positions are null for Closed status'
+    );
     Assert.areEqual(
       1,
       controller.positions.size(),
@@ -41,9 +45,17 @@ private class PositionListWithControllerTest {
     controller.selectedStatus = '';
     controller.getPositionsList();
 
-    Assert.areNotEqual(null, controller.positions, 'Positions are null for all statuses');
-    Assert.areEqual(3, controller.positions.size(), 'The expected size of all positions is 3, but instead get: ' +
-    controller.positions.size());
+    Assert.areNotEqual(
+      null,
+      controller.positions,
+      'Positions are null for all statuses'
+    );
+    Assert.areEqual(
+      3,
+      controller.positions.size(),
+      'The expected size of all positions is 3, but instead get: ' +
+      controller.positions.size()
+    );
   }
 
   @isTest

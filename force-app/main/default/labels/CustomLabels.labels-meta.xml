@@ -64,6 +64,13 @@
         <value>Min Pay</value>
     </labels>
     <labels>
+        <fullName>Next</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
         <fullName>Open_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -76,6 +83,13 @@
         <protected>true</protected>
         <shortDescription>Positions</shortDescription>
         <value>Positions</value>
+    </labels>
+    <labels>
+        <fullName>Previous</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Previous</shortDescription>
+        <value>Previous</value>
     </labels>
     <labels>
         <fullName>Save</fullName>

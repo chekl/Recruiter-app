@@ -6,18 +6,6 @@
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
-        <target>lightning__Tab</target>
     </targets>
-    <targetConfigs>  
-        <targetConfig
-      targets="lightning__HomePage,lightning__RecordPage,lightning__AppPage"
-    >
-    <property
-        name="pageSize"
-        type="Integer"
-        default="200"
-        label="Enter the page size"
-      />
-</targetConfig>
-</targetConfigs>
+
 </LightningComponentBundle>

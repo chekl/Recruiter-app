@@ -9,13 +9,6 @@ public with sharing class PositionsListWithController {
   };
 
   public void getPositionsList() {
-    List<String> statusFilter = new List<String>();
-    if (String.isNotBlank(selectedStatus)) {
-      statusFilter.add(selectedStatus);
-    } else {
-      statusFilter.addAll(new List<String>{ 'Open', 'Closed', 'Pending' });
-    }
-
     positions = [
       SELECT
         Id,
@@ -26,10 +19,12 @@ public with sharing class PositionsListWithController {
         Min_Pay__c,
         Max_Pay__c
       FROM Position__c
-      WHERE Status__c IN :statusFilter
+      WHERE Status__c IN :PositionListControllerHelper.generateStatus(selectedStatus)
+      WITH SECURITY_ENFORCED
+      LIMIT 10
     ];
   }
-  
+
   public PositionsListWithController() {
     getPositionsList();
   }
@@ -39,6 +34,9 @@ public with sharing class PositionsListWithController {
   }
 
   public PageReference save() {
+    if (!Schema.sObjectType.Position__c.fields.Status__c.isUpdateable()) {
+      throw new CustomException(Label.Permission_Exception);
+  }
     update positions;
     return null;
   }

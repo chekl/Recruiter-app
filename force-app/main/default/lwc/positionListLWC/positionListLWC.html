@@ -1,22 +1,22 @@
 <template>
   <div class="slds">
-    <lightning-card hide-header>
+    <lightning-card label={labels.Positions} hide-header>
       <div class="positions-list-header">
-        <h1>{label.Positions}</h1>
+        <h1>{labels.Positions}</h1>
       </div>
       <div class="positions-list-filter">
         <lightning-combobox
           class="positions-list-filter-select"
           name="selectedStatus"
-          label={label.Status}
+          label={labels.Status}
           value={selectedStatus}
           options={options}
           onchange={handleStatusChange}
         ></lightning-combobox>
         <lightning-button
           variant="brand"
-          label={label.Save}
-          title={label.Save_Positions_Title}
+          label={labels.Save}
+          title={labels.Save_Positions_Title}
           onclick={handleSave}
         ></lightning-button>
       </div>
@@ -30,9 +30,17 @@
           suppress-bottom-bar
           hide-checkbox-column
         ></c-custom-dt-type-lwc>
+        <c-table-pagination
+          totalrecords={positionCount}
+          pagesize={pageSize}
+          pagenumber={currentPage}
+          onnextpage={handleNextPage}
+          onpreviouspage={handlePreviousPage}
+          onchangepage={handleSetCurrentPage}
+        ></c-table-pagination>
       </template>
       <template if:false={positions.length}>
-        <p class="positions-list-is-empty">{label.Empty_List}</p>
+        <p class="positions-list-is-empty">{labels.Empty_List}</p>
       </template>
     </lightning-card>
   </div>
