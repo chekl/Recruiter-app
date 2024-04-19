@@ -12,10 +12,10 @@
         <targetConfig
       targets="lightning__HomePage,lightning__RecordPage,lightning__AppPage"
     >
-            <property
+    <property
         name="pageSize"
         type="Integer"
-        default="5"
+        default="200"
         label="Enter the page size"
       />
 </targetConfig>

@@ -64,19 +64,27 @@ export default class PositionsList extends LightningElement {
   @api pageSize = 200;
   currentPage = 1;
   wiredActivities;
+  @track positionCount;
+  @track positionObjectMetadata;
 
   @wire(getObjectInfo, { objectApiName: POSITION__C_OBJECT })
-  positionObjectMetadata;
+  PositionObjectMetadata({data, error}) {
+    if(data) {
+      this.positionObjectMetadata = data;
+    } else if (error) {
+      this.showErrorToast(this.generateErrorMessage(error));
+    }
+  }
 
   @wire(getPicklistValues, {
-    recordTypeId: "$positionObjectMetadata.data.defaultRecordTypeId",
+    recordTypeId: "$positionObjectMetadata.defaultRecordTypeId",
     fieldApiName: STATUS__C_FIELD
   })
   PositionStatusPicklist({ data, error }) {
     if (data) {
       this.positionStatus = data.values;
     } else if (error) {
-      this.showErrorToast(error);
+      this.showErrorToast(this.generateErrorMessage(error));
     }
   }
 
@@ -94,7 +102,7 @@ export default class PositionsList extends LightningElement {
     this.wiredActivities = value;
     const { data, error } = value;
     if (data) {
-      const options = this.positionStatus.map((picklistValue) => ({
+        const options = this.positionStatus.map((picklistValue) => ({
         label: picklistValue.label,
         value: picklistValue.value
       }));
@@ -105,14 +113,20 @@ export default class PositionsList extends LightningElement {
         };
       });
     } else if (error) {
-      this.showErrorToast(error);
+      this.showErrorToast(this.generateErrorMessage(error));
     }
   }
 
   @wire(getCountPositions, {
     status: "$selectedStatus",
   })
-  positionCount;
+  PositionCount({data, error}) {
+    if(data) {
+      this.positionCount = data;
+    } else if (error) {
+      this.showErrorToast(this.generateErrorMessage(error));
+    }
+  }
 
   handleSave() {
     updatePositions({
@@ -121,7 +135,7 @@ export default class PositionsList extends LightningElement {
     }).then(() => {
       this.template.querySelector("c-custom-dt-type-lwc").draftValues = [];
       refreshApex(this.wiredActivities);
-    });
+    }).catch((error) => this.showErrorToast(error.body.message));
   }
 
   handleStatusChange(event) {
@@ -143,9 +157,9 @@ export default class PositionsList extends LightningElement {
 
   showErrorToast(error) {
     const event = new ShowToastEvent({
-      title: this.label.Default_Error_Title,
+      title: this.labels.Default_Error_Title,
       variant: "Error",
-      message: JSON.stringify(error)
+      message: error
     });
     this.dispatchEvent(event);
   }
@@ -169,5 +183,17 @@ export default class PositionsList extends LightningElement {
 
   handleSetCurrentPage(event) {
     this.currentPage = event.detail;
+  }
+
+  generateErrorMessage(error) {
+    let message = '';
+    
+    if (Array.isArray(error.body)) {
+      message = error.body.map(e => e.message).join(', ');
+    } else if (typeof error.body.message === 'string') {
+      message = error.body.message;
+    }
+
+    return message;
   }
 }
