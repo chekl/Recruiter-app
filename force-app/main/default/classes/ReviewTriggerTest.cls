@@ -2,9 +2,9 @@
 public with sharing class ReviewTriggerTest {
   @isTest
   static void testUpdateJobApplicationRatingAndReviews() {
+    Test.startTest();
     Position__c position = TestDataFactory.createPosition('Test');
     Candidate__c candidate = TestDataFactory.createCandidate('Test');
-    Test.startTest();
     insert position;
     insert candidate;
     Id candidateId = [
@@ -30,14 +30,20 @@ public with sharing class ReviewTriggerTest {
     .Id;
 
     List<Review__c> reviews = new List<Review__c>();
-    for (Integer i = 1; i <= 3; i++) {
+    for (Integer i = 0; i < 2000; i++) {
       Review__c review = TestDataFactory.createReview('Test', jobApplicationId);
-      review.Status__c = 'Reviewed';
-      review.Rating__c = 10 * i;
+      review.Rating__c = Math.mod(i, 2) == 0 ? 10 : 20;
       reviews.add(review);
     }
     insert reviews;
-    delete reviews[0];
+
+    Review__c reviewToDelete = [
+      SELECT Id
+      FROM Review__c
+      WHERE Rating__c = 10
+      LIMIT 1
+    ];
+    delete reviewToDelete;
     Test.stopTest();
 
     Job_Application__c updatedJobApplication = [
@@ -48,16 +54,16 @@ public with sharing class ReviewTriggerTest {
     ];
 
     Assert.areEqual(
-      2,
+      1999,
       updatedJobApplication.Number_Of_Reviews__c,
-      'The expected number of reviews is 2, but insted get: ' +
+      'The expected number of reviews is 1999, but insted get: ' +
       updatedJobApplication.Number_Of_Reviews__c
     );
     Assert.areEqual(
-      25,
-      updatedJobApplication.Rating__c,
-      'The expected avg rating is 25, but insted get: ' +
-      updatedJobApplication.Rating__c
+      15,
+      Integer.ValueOf(updatedJobApplication.Rating__c),
+      'The expected avg rating is 15, but insted get: ' +
+      Integer.ValueOf(updatedJobApplication.Rating__c)
     );
   }
 }

@@ -7,12 +7,6 @@ public with sharing class ReviewTriggerHandler {
       jobApplicationIds.add(review.Job_Application__c);
     }
 
-    List<Job_Application__c> jobApplications = [
-      SELECT Id, Number_Of_Reviews__c, Rating__c
-      FROM Job_Application__c
-      WHERE Id IN :jobApplicationIds
-    ];
-
     Map<Id, Decimal> fullRatings = new Map<Id, Decimal>();
     Map<Id, Integer> numbersOfReviews = new Map<Id, Integer>();
 
@@ -43,13 +37,21 @@ public with sharing class ReviewTriggerHandler {
       );
     }
 
-    for (Job_Application__c jobApplication : jobApplications) {
+    List<Job_Application__c> jobApplications = new List<Job_Application__c>();
+
+    for (Job_Application__c jobApplication : [
+      SELECT Id, Number_Of_Reviews__c, Rating__c
+      FROM Job_Application__c
+      WHERE Id IN :jobApplicationIds
+    ]) {
       jobApplication.Number_Of_Reviews__c = numbersOfReviews.get(
         jobApplication.Id
       );
       jobApplication.Rating__c =
         fullRatings.get(jobApplication.Id) /
         numbersOfReviews.get(jobApplication.Id);
+
+      jobApplications.add(jobApplication);
     }
 
     if (!jobApplications.isEmpty()) {
