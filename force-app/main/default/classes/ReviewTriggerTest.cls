@@ -24,7 +24,7 @@ public with sharing class ReviewTriggerTest {
     Id jobApplicationId = [
       SELECT Id
       FROM Job_Application__c
-      WHERE Position__c = :positionId
+      WHERE Position__c = :positionId AND Candidate__c = :candidateId
       LIMIT 1
     ]
     .Id;
@@ -32,38 +32,49 @@ public with sharing class ReviewTriggerTest {
     List<Review__c> reviews = new List<Review__c>();
     for (Integer i = 0; i < 2000; i++) {
       Review__c review = TestDataFactory.createReview('Test', jobApplicationId);
-      review.Rating__c = Math.mod(i, 2) == 0 ? 10 : 20;
+      review.Rating__c = null;
       reviews.add(review);
     }
     insert reviews;
 
-    Review__c reviewToDelete = [
-      SELECT Id
-      FROM Review__c
-      WHERE Rating__c = 10
-      LIMIT 1
-    ];
-    delete reviewToDelete;
+    List<Review__c> reviewsToUpdate = [SELECT Id, Feedback__c FROM Review__c WHERE Job_Application__c = :jobApplicationId AND Rating__c = null];
+    Integer halfSize = reviewsToUpdate.size() / 2;
+    
+    for(Integer i = 0; i < halfSize; i++) {
+      reviewsToUpdate.get(i).Status__c = 'Reviewed';
+      reviewsToUpdate.get(i).Rating__c = 20; 
+    }
+
+    update reviewsToUpdate; 
+
+    List<Review__c> reviewsToDelete = new List<Review__c>{reviewsToUpdate.get(0), reviewsToUpdate.get(1)};
+    delete reviewsToDelete;
+
+    List<Review__c> reviewsToUndelete = new List<Review__c>{reviewsToUpdate.get(0)};
+    undelete reviewsToUndelete;
     Test.stopTest();
 
     Job_Application__c updatedJobApplication = [
-      SELECT Id, Rating__c, Number_Of_Reviews__c
+      SELECT Id, Full_Rating__c, Number_Of_Reviews__c
       FROM Job_Application__c
-      WHERE Position__c = :positionId
+      WHERE Position__c = :positionId AND Candidate__c = :candidateId
       LIMIT 1
     ];
 
+    Integer expectedNumberOfReviews = halfSize - 1;
+    Integer expectedFullRating = 20000 - 20;
+
     Assert.areEqual(
-      1999,
+      expectedNumberOfReviews,
       updatedJobApplication.Number_Of_Reviews__c,
-      'The expected number of reviews is 1999, but insted get: ' +
+      'The expected number of reviews is ' + expectedNumberOfReviews + ', but insted get: ' +
       updatedJobApplication.Number_Of_Reviews__c
     );
     Assert.areEqual(
-      15,
-      Integer.ValueOf(updatedJobApplication.Rating__c),
-      'The expected avg rating is 15, but insted get: ' +
-      Integer.ValueOf(updatedJobApplication.Rating__c)
+      expectedFullRating,
+      updatedJobApplication.Full_Rating__c,
+      'The expected full rating is '+ expectedFullRating +', but insted get: ' +
+      updatedJobApplication.Full_Rating__c
     );
   }
 }
