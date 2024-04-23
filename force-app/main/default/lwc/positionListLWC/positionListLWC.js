@@ -27,7 +27,12 @@ import Default_Error_Title from "@salesforce/label/c.Default_Error_Title";
 import getCountPositions from "@salesforce/apex/PositionsListWithControllerLWC.getCountPositions";
 
 const columns = [
-  { label: Title, fieldName: "Title__c", type: "text" },
+  {
+    label: Title,
+    fieldName: "recordLink",
+    type: "url",
+    typeAttributes: { label: { fieldName: "Title__c" }, target: "_blank" }
+  },
   {
     label: Status,
     fieldName: "Status__c",
@@ -68,8 +73,8 @@ export default class PositionsList extends LightningElement {
   @track positionObjectMetadata;
 
   @wire(getObjectInfo, { objectApiName: POSITION__C_OBJECT })
-  PositionObjectMetadata({data, error}) {
-    if(data) {
+  PositionObjectMetadata({ data, error }) {
+    if (data) {
       this.positionObjectMetadata = data;
     } else if (error) {
       this.showErrorToast(this.generateErrorMessage(error));
@@ -102,13 +107,14 @@ export default class PositionsList extends LightningElement {
     this.wiredActivities = value;
     const { data, error } = value;
     if (data) {
-        const options = this.positionStatus.map((picklistValue) => ({
+      const options = this.positionStatus.map((picklistValue) => ({
         label: picklistValue.label,
         value: picklistValue.value
       }));
       this.positions = data.map((record) => {
         return {
           ...record,
+          recordLink: "/" + record.Id,
           picklistOptions: options
         };
       });
@@ -118,10 +124,10 @@ export default class PositionsList extends LightningElement {
   }
 
   @wire(getCountPositions, {
-    status: "$selectedStatus",
+    status: "$selectedStatus"
   })
-  PositionCount({data, error}) {
-    if(data) {
+  PositionCount({ data, error }) {
+    if (data) {
       this.positionCount = data;
     } else if (error) {
       this.showErrorToast(this.generateErrorMessage(error));
@@ -132,10 +138,12 @@ export default class PositionsList extends LightningElement {
     updatePositions({
       updatedData: this.template.querySelector("c-custom-dt-type-lwc")
         .draftValues
-    }).then(() => {
-      this.template.querySelector("c-custom-dt-type-lwc").draftValues = [];
-      refreshApex(this.wiredActivities);
-    }).catch((error) => this.showErrorToast(error.body.message));
+    })
+      .then(() => {
+        this.template.querySelector("c-custom-dt-type-lwc").draftValues = [];
+        refreshApex(this.wiredActivities);
+      })
+      .catch((error) => this.showErrorToast(error.body.message));
   }
 
   handleStatusChange(event) {
@@ -186,11 +194,11 @@ export default class PositionsList extends LightningElement {
   }
 
   generateErrorMessage(error) {
-    let message = '';
-    
+    let message;
+
     if (Array.isArray(error.body)) {
-      message = error.body.map(e => e.message).join(', ');
-    } else if (typeof error.body.message === 'string') {
+      message = error.body.map((e) => e.message).join(", ");
+    } else if (typeof error.body.message === "string") {
       message = error.body.message;
     }
 

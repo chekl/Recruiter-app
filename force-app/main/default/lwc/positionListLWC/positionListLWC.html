@@ -22,13 +22,15 @@
       </div>
       <template if:true={positions.length}>
         <c-custom-dt-type-lwc
-          class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+          class="slds-table slds-table_bordered slds-table_striped"
           key-field="Id"
           data={positions}
           columns={columns}
           oncellchange={handleCellChange}
           suppress-bottom-bar
           hide-checkbox-column
+          show-row-number-column
+          row-number-offset={pageOffset}
         ></c-custom-dt-type-lwc>
         <c-table-pagination
           totalrecords={positionCount}

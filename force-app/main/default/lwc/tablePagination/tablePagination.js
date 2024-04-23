@@ -8,7 +8,7 @@ export default class TablePagination extends LightningElement {
   @api pagenumber = 1;
   @api pagesize;
 
-  labels = {Next, Previous};
+  labels = { Next, Previous };
 
   get totalPages() {
     return this.calculateTotalPages();
@@ -16,18 +16,16 @@ export default class TablePagination extends LightningElement {
 
   calculateTotalPages() {
     this.totalPagesSize = Math.ceil(this.totalrecords / this.pagesize);
-    return Array.from(
-      { length: this.totalPagesSize },
-      (_, index) => {
-        return { value: index + 1, isCurrent: index + 1 === this.pagenumber };
-      }
-    );
+    return Array.from({ length: this.totalPagesSize }, (_, index) => {
+      return { value: index + 1, isCurrent: index + 1 === this.pagenumber };
+    });
   }
 
   refreshActivePage(page) {
     this.totalPages.forEach((item) => {
       item.isCurrent = item.value === page;
     });
+    window.scrollTo(0, 0);
   }
 
   get isFirstPage() {
