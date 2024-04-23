@@ -1,0 +1,10 @@
+.table-pagination {
+    position: fixed;
+    z-index: 1000;
+    bottom: 5px;
+    left: 50%;
+    padding: 5px;
+    border-radius: 10px;
+    transform: translate(-50%, 0); 
+    background-color: var(--slds-g-color-brand-base-100, #ffffff);
+}

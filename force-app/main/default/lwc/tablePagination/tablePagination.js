@@ -28,6 +28,7 @@ export default class TablePagination extends LightningElement {
     this.totalPages.forEach((item) => {
       item.isCurrent = item.value === page;
     });
+    window.scrollTo(0,0);
   }
 
   get isFirstPage() {

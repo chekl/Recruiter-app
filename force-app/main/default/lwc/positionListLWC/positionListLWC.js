@@ -27,7 +27,8 @@ import Default_Error_Title from "@salesforce/label/c.Default_Error_Title";
 import getCountPositions from "@salesforce/apex/PositionsListWithControllerLWC.getCountPositions";
 
 const columns = [
-  { label: Title, fieldName: "Title__c", type: "text" },
+  { label: Title, fieldName: "recordLink", type: 'url',
+  typeAttributes: { label: { fieldName: "Title__c" }, target: "_blank" }},
   {
     label: Status,
     fieldName: "Status__c",
@@ -40,7 +41,7 @@ const columns = [
       label: Status
     }
   },
-  { label: Open_Date, fieldName: "Open_Date__c", type: "date" },
+  { label: Open_Date, fieldName: "Open_Date__c", type: "date"},
   { label: Closed_Date, fieldName: "Closed_Date__c", type: "date" },
   { label: Min_Pay, fieldName: "Min_Pay__c", type: "currency" },
   { label: Max_Pay, fieldName: "Max_Pay__c", type: "currency" }
@@ -109,6 +110,7 @@ export default class PositionsList extends LightningElement {
       this.positions = data.map((record) => {
         return {
           ...record,
+          recordLink: '/' + record.Id, 
           picklistOptions: options
         };
       });
@@ -186,7 +188,7 @@ export default class PositionsList extends LightningElement {
   }
 
   generateErrorMessage(error) {
-    let message = '';
+    let message;
     
     if (Array.isArray(error.body)) {
       message = error.body.map(e => e.message).join(', ');
