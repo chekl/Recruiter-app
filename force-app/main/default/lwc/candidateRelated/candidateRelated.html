@@ -1,0 +1,31 @@
+<template>
+    <lightning-card title={labels.Related_Candidates}>
+       <div>
+            <template if:true={candidates.length}>
+                <div class="slds-var-m-horizontal_medium slds-grid slds-wrap">
+                    <template for:each={candidates} for:item="candidate">
+                        <lightning-tile class="tile slds-col slds-var-p-around_small" 
+                                        key={candidate.id} 
+                                        label={candidate.fullName} 
+                                        href={candidate.link} 
+                                        data-candidate={candidate.id} 
+                                        onclick={openCandidateDetails}>
+                            <p class="slds-truncate">{candidate.email}</p>
+                        </lightning-tile>
+                    </template>
+                </div>  
+                <c-table-pagination
+                    totalrecords={candidateCount}
+                    pagesize={pageSize}
+                    pagenumber={currentPage}
+                    onnextpage={handleNextPage}
+                    onpreviouspage={handlePreviousPage}
+                    onchangepage={handleSetCurrentPage}
+          ></c-table-pagination>          
+            </template>
+            <template if:false={candidates.length}>
+                <p class="candidates-list-is-empty">{labels.Empty_List}</p>
+            </template>
+        </div>        
+    </lightning-card>
+</template>

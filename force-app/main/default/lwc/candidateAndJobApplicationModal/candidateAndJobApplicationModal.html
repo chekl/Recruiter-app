@@ -1,0 +1,22 @@
+<template>
+    <lightning-modal-header label="My Modal Heading"></lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-card title="candidate">
+            <p>{candidate.Id}</p>
+            <p>{candidate.Email__c}</p>
+            <p>{candidate.First_Name__c}</p>
+            <p>{candidate.Last_Name__c}</p>
+            <p>{candidate.Ready_To_Relocate__c}</p>
+            <p>{candidate.Location__c}</p>
+            <p>{candidate.Mobile__c}</p>
+            <p>{candidate.Resume__c}</p>
+        </lightning-card>
+        <lightning-card title="ja">
+            <lightning-datatable
+                columns={columns}
+                data={jobApplications}
+                key-field="Id"
+            ></lightning-datatable>
+        </lightning-card>
+    </lightning-modal-body>
+</template>

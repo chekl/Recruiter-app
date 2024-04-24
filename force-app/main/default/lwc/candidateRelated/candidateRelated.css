@@ -1,0 +1,11 @@
+.candidates-list-is-empty {
+    margin-left: 15px;
+    font-size: medium;
+}
+
+.tile {
+    background: var(--slds-g-color-brand-base-95, #EEF4FF);
+    border: 1px solid var(--slds-g-color-neutral-base-80, #C9C9C9);
+    border-radius: 5px;
+    margin: 5px;
+}
