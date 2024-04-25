@@ -10,7 +10,7 @@
                                         href={candidate.link} 
                                         data-candidate={candidate.id} 
                                         onclick={openCandidateDetails}>
-                            <p class="slds-truncate">{candidate.email}</p>
+                            <p data-candidate={candidate.id} class="slds-truncate">{candidate.email}</p>
                         </lightning-tile>
                     </template>
                 </div>  

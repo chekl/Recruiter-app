@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>All</fullName>
@@ -15,6 +15,20 @@
         <value>All Job Applications</value>
     </labels>
     <labels>
+        <fullName>Average_Rating</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Average Rating</shortDescription>
+        <value>Average Rating</value>
+    </labels>
+    <labels>
+        <fullName>Candidate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Candidate</shortDescription>
+        <value>Candidate</value>
+    </labels>
+    <labels>
         <fullName>Closed_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -22,11 +36,25 @@
         <value>Closed Date</value>
     </labels>
     <labels>
+        <fullName>Created_By</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Created By</shortDescription>
+        <value>Created By</value>
+    </labels>
+    <labels>
         <fullName>Default_Error_Title</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Default Error Title</shortDescription>
         <value>Something went wrong!</value>
+    </labels>
+    <labels>
+        <fullName>Email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email</shortDescription>
+        <value>Email</value>
     </labels>
     <labels>
         <fullName>Empty_List</fullName>
@@ -50,6 +78,13 @@
         <value>Job Application</value>
     </labels>
     <labels>
+        <fullName>Location</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Location</shortDescription>
+        <value>Location</value>
+    </labels>
+    <labels>
         <fullName>Max_Pay</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -71,11 +106,39 @@
         <value>Next</value>
     </labels>
     <labels>
+        <fullName>Only_Unique_Candidates_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Only Unique Candidates Error</shortDescription>
+        <value>This candidate has job application for this position</value>
+    </labels>
+    <labels>
         <fullName>Open_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Open Date</shortDescription>
         <value>Open Date</value>
+    </labels>
+    <labels>
+        <fullName>Permission_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Permission Exception</shortDescription>
+        <value>This function is not available for your role!</value>
+    </labels>
+    <labels>
+        <fullName>Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>Position_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Position Title</shortDescription>
+        <value>Position Title</value>
     </labels>
     <labels>
         <fullName>Positions</fullName>
@@ -90,6 +153,34 @@
         <protected>true</protected>
         <shortDescription>Previous</shortDescription>
         <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>Ready_To_Relocate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Ready To Relocate</shortDescription>
+        <value>Ready To Relocate</value>
+    </labels>
+    <labels>
+        <fullName>Related_Candidates</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Related Candidates</shortDescription>
+        <value>Related Candidates</value>
+    </labels>
+    <labels>
+        <fullName>Related_Job_Applications</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Related Job Applications</shortDescription>
+        <value>Related Job Applications</value>
+    </labels>
+    <labels>
+        <fullName>Resume</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Resume</shortDescription>
+        <value>Resume</value>
     </labels>
     <labels>
         <fullName>Save</fullName>

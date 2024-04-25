@@ -35,13 +35,15 @@ public with sharing class CandidateRelatedController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static List<Job_Application__c> selectJobApplicationsRelatedToCandidate(
-    Id candidateId
+  public static Job_Application__c selectJobApplicationsRelatedToCandidate(
+    Id candidateId,
+    Id positionId
   ) {
     return [
-      SELECT Id, Position__r.Title__c, Status__c, Avg_Rating__c
+      SELECT Id, Status__c, Avg_Rating__c
       FROM Job_Application__c
-      WHERE Candidate__c = :candidateId
+      WHERE Candidate__c = :candidateId AND Position__c = :positionId
+      LIMIT 1
     ];
   }
 

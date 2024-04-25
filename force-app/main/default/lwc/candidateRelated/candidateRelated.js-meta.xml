@@ -18,6 +18,12 @@
                 default="5"
                 label="Enter the page size"
             />
+            <property
+                name="isAvatarsShowed"
+                type="Boolean"
+                default="true"
+                label="Should avatars be showed?"
+            />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

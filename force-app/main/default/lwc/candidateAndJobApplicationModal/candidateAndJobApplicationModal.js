@@ -1,27 +1,19 @@
 import { api } from 'lwc';
 import LightningModal from 'lightning/modal';
-import Title from '@salesforce/label/c.Title';
 import Status from '@salesforce/label/c.Status';
 import Average_Rating from '@salesforce/label/c.Average_Rating'
-
-const COLUMNS = [
-    {
-    label: Title,
-    fieldName: "positionTitle",
-    type: "Text"  },
-  {
-    label: Status,
-    fieldName: "Status__c",
-    type: "Text",
-  },
-  { label: Average_Rating, 
-    fieldName: 'Avg_Rating__c',
-    type: "Number"
-}
-];
+import Job_Application from '@salesforce/label/c.Job_Application';
+import Candidate from '@salesforce/label/c.Candidate';
+import Location from '@salesforce/label/c.Location';
+import Email from '@salesforce/label/c.Email';
+import Phone from '@salesforce/label/c.Phone';
+import Resume from '@salesforce/label/c.Resume';
+import Ready_To_Relocate from '@salesforce/label/c.Ready_To_Relocate';
+import Created_By from '@salesforce/label/c.Created_By';
 
 export default class CandidateAndJobApplicationModal extends LightningModal {
     @api candidate;
-    @api jobApplications;
-    columns = COLUMNS;
+    @api jobApplication;
+    @api isAvatarsShowed;
+    labels = { Job_Application, Candidate, Email, Phone, Resume, Ready_To_Relocate, Location, Average_Rating, Status, Created_By };
 }

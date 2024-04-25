@@ -8,4 +8,15 @@
     border: 1px solid var(--slds-g-color-neutral-base-80, #C9C9C9);
     border-radius: 5px;
     margin: 5px;
+    cursor: pointer;
+}
+
+.tile:hover {
+    background: var(--slds-g-color-brand-base-90, #D8E6FE);
+    transition: 0.3s;
+}
+
+.tile:active {
+    background: var(--slds-g-color-brand-base-80, #AACBFF);
+    transition: 0.1s;
 }
