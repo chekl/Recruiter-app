@@ -4,9 +4,10 @@ import selectCandidatesRelatedToPosition from "@salesforce/apex/CandidateRelated
 import selectCountOfRelatedCandidates from "@salesforce/apex/CandidateRelatedController.selectCountOfRelatedCandidates";
 import Related_Candidates from "@salesforce/label/c.Related_Candidates";
 import Empty_List from "@salesforce/label/c.Empty_List";
-import selectJobApplicationsRelatedToCandidate from "@salesforce/apex/CandidateRelatedController.selectJobApplicationsRelatedToCandidate";
+import selectJobApplicationRelatedToCandidate from "@salesforce/apex/CandidateRelatedController.selectJobApplicationRelatedToCandidate";
 import selectCandidateById from "@salesforce/apex/CandidateRelatedController.selectCandidateById";
 import CandidateAndJobApplicationModal from "c/candidateAndJobApplicationModal";
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 export default class CandidateRelated extends LightningElement {
   labels = { Related_Candidates, Empty_List };
@@ -28,7 +29,7 @@ export default class CandidateRelated extends LightningElement {
     if (data) {
       this.candidateCount = data[0].expr0;
     } else if (error) {
-      //cnsol
+      this.showErrorToast(this.generateErrorMessage(error));
     }
   }
 
@@ -48,7 +49,7 @@ export default class CandidateRelated extends LightningElement {
         };
       });
     } else if (error) {
-      //cnsol
+      this.showErrorToast(this.generateErrorMessage(error));
     }
   }
 
@@ -72,7 +73,7 @@ export default class CandidateRelated extends LightningElement {
     const candidateId = event.target.dataset.candidate;
     Promise.all([
       selectCandidateById({ candidateId }),
-      selectJobApplicationsRelatedToCandidate({
+      selectJobApplicationRelatedToCandidate({
         candidateId,
         positionId: this.recordId
       })
@@ -93,7 +94,28 @@ export default class CandidateRelated extends LightningElement {
         });
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        this.showErrorToast(this.generateErrorMessage(error));
       });
+  }
+
+  showErrorToast(error) {
+    const event = new ShowToastEvent({
+      title: this.labels.Default_Error_Title,
+      variant: "Error",
+      message: error
+    });
+    this.dispatchEvent(event);
+  }
+
+  generateErrorMessage(error) {
+    let message;
+
+    if (Array.isArray(error.body)) {
+      message = error.body.map((e) => e.message).join(", ");
+    } else if (typeof error.body.message === "string") {
+      message = error.body.message;
+    }
+
+    return message;
   }
 }

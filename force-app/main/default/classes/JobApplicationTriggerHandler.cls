@@ -25,9 +25,7 @@ public with sharing class JobApplicationTriggerHandler {
         jobApplication.Position__c
       );
       if (
-        candidates != null &&
-        candidates.size() > 1 &&
-        candidates.contains(jobApplication.Candidate__c)
+        candidates != null && candidates.contains(jobApplication.Candidate__c)
       ) {
         jobApplication.addError(System.Label.Only_Unique_Candidates_Error);
       }

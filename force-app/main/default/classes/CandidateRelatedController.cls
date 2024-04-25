@@ -1,5 +1,5 @@
 public with sharing class CandidateRelatedController {
-  public static List<Schema.FieldSetMember> getCandidateFields() {
+  private static List<Schema.FieldSetMember> getCandidateFields() {
     return Schema.SObjectType.Candidate__c.FieldSets.All_Fields.getFields();
   }
 
@@ -35,7 +35,7 @@ public with sharing class CandidateRelatedController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static Job_Application__c selectJobApplicationsRelatedToCandidate(
+  public static Job_Application__c selectJobApplicationRelatedToCandidate(
     Id candidateId,
     Id positionId
   ) {
