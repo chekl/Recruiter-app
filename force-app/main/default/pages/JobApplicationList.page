@@ -11,7 +11,7 @@
       </apex:column>
       <apex:column value="{!app.Position__c}" />
       <apex:column value="{!app.Status__c}" />
-      <apex:column value="{!app.Rating__c}" />
+      <apex:column value="{!app.Avg_Rating__c}" />
     </apex:pageBlockTable>
   </apex:pageBlock>
 </apex:page>
