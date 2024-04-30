@@ -58,4 +58,14 @@ public with sharing class CandidateRelatedController {
     query += 'Id FROM Candidate__c WHERE Id =:candidateId LIMIT 1';
     return Database.query(query);
   }
+
+  @AuraEnabled(cacheable=true)
+  public static Related_Candidate_Setting__mdt getCustomMetadataDefaultForRelatedCandidate() {
+    return [
+      SELECT Is_Avatars_Shown__c, Candidates_Per_Page__c
+      FROM Related_Candidate_Setting__mdt
+      WHERE QualifiedApiName = 'Default_Settings'
+      LIMIT 1
+    ];
+  }
 }

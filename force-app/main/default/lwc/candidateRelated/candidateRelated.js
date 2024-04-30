@@ -1,4 +1,4 @@
-import { LightningElement, wire, api, track } from "lwc";
+import { LightningElement, wire, track } from "lwc";
 import { CurrentPageReference } from "lightning/navigation";
 import selectCandidatesRelatedToPosition from "@salesforce/apex/CandidateRelatedController.selectCandidatesRelatedToPosition";
 import selectCountOfRelatedCandidates from "@salesforce/apex/CandidateRelatedController.selectCountOfRelatedCandidates";
@@ -6,6 +6,7 @@ import Related_Candidates from "@salesforce/label/c.Related_Candidates";
 import Empty_List from "@salesforce/label/c.Empty_List";
 import selectJobApplicationRelatedToCandidate from "@salesforce/apex/CandidateRelatedController.selectJobApplicationRelatedToCandidate";
 import selectCandidateById from "@salesforce/apex/CandidateRelatedController.selectCandidateById";
+import getCustomMetadataDefaultForRelatedCandidate from "@salesforce/apex/CandidateRelatedController.getCustomMetadataDefaultForRelatedCandidate";
 import CandidateAndJobApplicationModal from "c/candidateAndJobApplicationModal";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
@@ -16,12 +17,22 @@ export default class CandidateRelated extends LightningElement {
   recordId;
   currentPage = 1;
   @track candidates = [];
-  @api pageSize = 1;
+  pageSize;
   @track candidateCount;
-  @api isAvatarsShowed = false;
+  isAvatarsShowed;
 
   connectedCallback() {
     this.recordId = this.currentPageReference.attributes.recordId;
+  }
+
+  @wire(getCustomMetadataDefaultForRelatedCandidate)
+  Metadatarecord({ data, error }) {
+    if (data) {
+      this.pageSize = data.Candidates_Per_Page__c;
+      this.isAvatarsShowed = data.Is_Avatars_Shown__c;
+    } else if (error) {
+      this.showErrorToast(this.generateErrorMessage(error));
+    }
   }
 
   @wire(selectCountOfRelatedCandidates, { positionId: "$recordId" })

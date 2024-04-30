@@ -129,13 +129,6 @@ public class CandidateRelatedControllerTest {
       LIMIT 1
     ]
     .Id;
-    Id positionId = [
-      SELECT Id
-      FROM Position__c
-      WHERE Title__c = 'Test'
-      LIMIT 1
-    ]
-    .Id;
     Candidate__c candidate = CandidateRelatedController.selectCandidateById(
       candidateId
     );
@@ -148,6 +141,34 @@ public class CandidateRelatedControllerTest {
         candidateId +
         ', but instead get: ' +
         candidate.Id
+    );
+  }
+
+  @isTest
+  static void testGetCustomMetadataDefaultForRelatedCandidate() {
+    Test.startTest();
+    Related_Candidate_Setting__mdt defaultCustomMetadata = CandidateRelatedController.getCustomMetadataDefaultForRelatedCandidate();
+    Test.stopTest();
+
+    Boolean expectedIsAvatarShown = true;
+    Decimal expectedCandidatePesPage = 5;
+
+    Assert.areEqual(
+      expectedIsAvatarShown,
+      defaultCustomMetadata.Is_Avatars_Shown__c,
+      'The expected Is_Avatar_Shown is ' +
+        expectedIsAvatarShown +
+        ', but instead get: ' +
+        defaultCustomMetadata.Is_Avatars_Shown__c
+    );
+
+    Assert.areEqual(
+      expectedCandidatePesPage,
+      defaultCustomMetadata.Candidates_Per_Page__c,
+      'The expected Candidates_Per_Page is ' +
+        expectedCandidatePesPage +
+        ', but instead get: ' +
+        defaultCustomMetadata.Candidates_Per_Page__c
     );
   }
 }
