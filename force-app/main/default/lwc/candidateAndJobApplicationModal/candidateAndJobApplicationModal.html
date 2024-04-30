@@ -8,28 +8,39 @@
             <p class="slds-var-m-bottom_small">{labels.Candidate}</p>
             <a href={candidate.link}>{candidate.fullName}</a>
           </div>
-          <c-read-only-input
+          <lightning-input
+            type="text"
             label={labels.Email}
             value={candidate.Email__c}
-          ></c-read-only-input>
-          <c-read-only-input
+            readonly
+          ></lightning-input>
+          <lightning-input
+            type="text"
             label={labels.Phone}
             value={candidate.Mobile__c}
-          ></c-read-only-input>
-          <c-read-only-input
+            readonly
+          ></lightning-input>
+          <lightning-input
+            type="text"
             label={labels.Resume}
             value={candidate.Resume__c}
-          ></c-read-only-input>
+            readonly
+          ></lightning-input>
         </div>
         <div class="slds-col">
-          <c-read-only-input
+          <lightning-input
+            type="text"
             label={labels.Location}
             value={candidate.Location__c}
-          ></c-read-only-input>
-          <c-read-only-checkbox
+            readonly
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
             label={labels.Ready_To_Relocate}
             checked={candidate.Ready_To_Relocate}
-          ></c-read-only-checkbox>
+            name={labels.Ready_To_Relocate}
+            disabled
+          ></lightning-input>
           <div class="slds-form-element slds-var-m-vertical_x-small">
             <p class="slds-var-m-bottom_small">{labels.Created_By}</p>
             <template if:true={isAvatarsShowed}>
@@ -53,17 +64,20 @@
           <p class="slds-var-m-bottom_small">{labels.Job_Application}</p>
           <a href={jobApplication.link}>{jobApplication.Id}</a>
         </div>
-        <c-read-only-input
+        <lightning-input
+          type="text"
           class="slds-col"
           label={labels.Status}
           value={jobApplication.Status__c}
-        ></c-read-only-input>
-        <c-read-only-input
+          readonly
+        ></lightning-input>
+        <lightning-input
           class="slds-col"
           type="number"
           label={labels.Average_Rating}
           value={jobApplication.Avg_Rating__c}
-        ></c-read-only-input>
+          readonly
+        ></lightning-input>
       </div>
     </lightning-card>
   </lightning-modal-body>

@@ -10,7 +10,10 @@ export default class TablePagination extends LightningElement {
   @api ispagefixed = false;
 
   get positionTableClass() {
-    return (this.ispagefixed ? 'table-pagination-bottom-page-fixed' : '') + " slds-m-top_small slds-align_absolute-center";
+    return (
+      (this.ispagefixed ? "table-pagination-bottom-page-fixed" : "") +
+      " slds-m-top_small slds-align_absolute-center"
+    );
   }
 
   labels = { Next, Previous };

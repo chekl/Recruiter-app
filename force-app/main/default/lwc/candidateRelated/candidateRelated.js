@@ -119,14 +119,13 @@ export default class CandidateRelated extends LightningElement {
   }
 
   generateErrorMessage(error) {
-    let message;
-
+    let errorMessage;
     if (Array.isArray(error.body)) {
-      message = error.body.map((e) => e.message).join(", ");
+      errorMessage = error.body.map((e) => e.message).join(", ");
     } else if (typeof error.body.message === "string") {
-      message = error.body.message;
+      errorMessage = error.body.message;
     }
 
-    return message;
+    return errorMessage;
   }
 }
