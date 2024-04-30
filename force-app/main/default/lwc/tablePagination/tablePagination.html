@@ -1,28 +1,28 @@
 <template>
-  <div class="table-pagination slds-align_absolute-center slds-is-fixed">
-    <lightning-button
-      disabled={isFirstPage}
-      icon-name="utility:chevronleft"
-      label={labels.Previous}
-      onclick={previousPage}
-      class="slds-p-right_small"
-    ></lightning-button>
-    <template for:each={totalPages} for:item="page">
+  <div class={positionTableClass}>
       <lightning-button
-        disabled={page.isCurrent}
-        key={page.value}
-        label={page.value}
-        data-value={page.value}
-        onclick={handleChangePage}
+        disabled={isFirstPage}
+        icon-name="utility:chevronleft"
+        label={labels.Previous}
+        onclick={previousPage}
         class="slds-p-right_small"
       ></lightning-button>
-    </template>
-    <lightning-button
-      disabled={isLastPage}
-      icon-name="utility:chevronright"
-      label={labels.Next}
-      onclick={nextPage}
-      icon-position="right"
-    ></lightning-button>
+      <template for:each={totalPages} for:item="page">
+        <lightning-button
+          disabled={page.isCurrent}
+          key={page.value}
+          label={page.value}
+          data-value={page.value}
+          onclick={handleChangePage}
+          class="slds-p-right_small"
+        ></lightning-button>          
+      </template>
+      <lightning-button
+        disabled={isLastPage}
+        icon-name="utility:chevronright"
+        label={labels.Next}
+        onclick={nextPage}
+        icon-position="right"
+      ></lightning-button>    
   </div>
 </template>
