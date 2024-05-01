@@ -6,7 +6,7 @@ import Related_Candidates from "@salesforce/label/c.Related_Candidates";
 import Empty_List from "@salesforce/label/c.Empty_List";
 import selectJobApplicationRelatedToCandidate from "@salesforce/apex/CandidateRelatedController.selectJobApplicationRelatedToCandidate";
 import selectCandidateByIdAndFieldSet from "@salesforce/apex/CandidateRelatedController.selectCandidateByIdAndFieldSet";
-import getCustomMetadataDefaultForRelatedCandidate from "@salesforce/apex/CandidateRelatedController.getCustomMetadataDefaultForRelatedCandidate";
+import getCustomMetadataForRelatedCandidate from "@salesforce/apex/CandidateRelatedController.getCustomMetadataForRelatedCandidate";
 import CandidateAndJobApplicationModal from "c/candidateAndJobApplicationModal";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
@@ -30,7 +30,7 @@ export default class CandidateRelated extends LightningElement {
     this.recordId = this.currentPageReference.attributes.recordId;
   }
 
-  @wire(getCustomMetadataDefaultForRelatedCandidate)
+  @wire(getCustomMetadataForRelatedCandidate)
   Metadatarecord({ data, error }) {
     if (data) {
       this.pageSize = data.Candidates_Per_Page__c;
@@ -58,7 +58,8 @@ export default class CandidateRelated extends LightningElement {
   @wire(selectCandidatesRelatedToPosition, {
     positionId: "$recordId",
     pageOffset: "$pageOffset",
-    pageSize: "$pageSize"
+    pageSize: "$pageSize",
+    fieldSetName: "$fieldSetForCandidateTile"
   })
   Candidates({ data, error }) {
     if (data) {

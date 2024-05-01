@@ -27,20 +27,16 @@ public with sharing class CandidateRelatedController {
   public static List<Job_Application__c> selectCandidatesRelatedToPosition(
     Id positionId,
     Integer pageSize,
-    Integer pageOffset
+    Integer pageOffset,
+    String fieldSetName
   ) {
-    return [
-      SELECT
-        Candidate__c,
-        Candidate__r.Name,
-        Candidate__r.First_Name__c,
-        Candidate__r.Last_Name__c,
-        Candidate__r.Email__c
-      FROM Job_Application__c
-      WHERE Position__c = :positionId
-      LIMIT :pageSize
-      OFFSET :pageOffset
-    ];
+    String query =
+      'SELECT ' +
+      CandidateRelatedController.generateFieldsForQueryByFieldSet(
+        CandidateRelatedController.getJobApplicationFields(fieldSetName)
+      ) +
+      'Id FROM Job_Application__c WHERE Position__c = :positionId LIMIT :pageSize OFFSET :pageOffset';
+    return Database.query(query);
   }
 
   @AuraEnabled(cacheable=true)
@@ -67,11 +63,6 @@ public with sharing class CandidateRelatedController {
     if (candidateFieldSet != null) {
       return candidateFieldSet.getFields();
     } else {
-      System.debug(
-        'Field set \'' +
-          fieldSetName +
-          '\' does not exist on Candidate__c object.'
-      );
       return new List<Schema.FieldSetMember>();
     }
   }
@@ -95,28 +86,17 @@ public with sharing class CandidateRelatedController {
       fieldSetName
     );
     if (candidateFields.isEmpty()) {
-      // Handle the case where the field set is empty or does not exist
       return null;
     }
-
-    System.debug(
-      'Fields in field set \'' +
-        fieldSetName +
-        '\': ' +
-        generateFieldsForQueryByFieldSet(candidateFields)
-    );
-
     String query =
       'SELECT ' +
       generateFieldsForQueryByFieldSet(candidateFields) +
       'Id FROM Candidate__c WHERE Id = :candidateId LIMIT 1';
-    System.debug('Query generated: ' + query);
-
     return Database.query(query);
   }
 
   @AuraEnabled(cacheable=true)
-  public static Related_Candidate_Setting__mdt getCustomMetadataDefaultForRelatedCandidate() {
+  public static Related_Candidate_Setting__mdt getCustomMetadataForRelatedCandidate() {
     String qualifiedApiName;
 
     if (

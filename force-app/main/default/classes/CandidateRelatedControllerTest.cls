@@ -7,24 +7,9 @@ public class CandidateRelatedControllerTest {
     Candidate__c candidate = TestDataFactory.createCandidate('Test');
     insert position;
     insert candidate;
-    Id candidateId = [
-      SELECT Id
-      FROM Candidate__c
-      WHERE Last_Name__c = 'Test'
-      LIMIT 1
-    ]
-    .Id;
-    Id positionId = [
-      SELECT Id
-      FROM Position__c
-      WHERE Title__c = 'Test'
-      LIMIT 1
-    ]
-    .Id;
-
     Job_Application__c jobApplication = TestDataFactory.createJobApplication(
-      positionId,
-      candidateId
+      position.Id,
+      candidate.Id
     );
     insert jobApplication;
     Test.stopTest();
@@ -72,7 +57,8 @@ public class CandidateRelatedControllerTest {
     List<Job_Application__c> jobApplications = CandidateRelatedController.selectCandidatesRelatedToPosition(
       positionId,
       1,
-      0
+      0,
+      'Related_Candidate_Tile'
     );
     Test.stopTest();
     Integer expectedResult = 1;
@@ -105,7 +91,8 @@ public class CandidateRelatedControllerTest {
     .Id;
     Job_Application__c jobApplication = CandidateRelatedController.selectJobApplicationRelatedToCandidate(
       candidateId,
-      positionId
+      positionId,
+      'Related_Candidate_Job_Application'
     );
     Test.stopTest();
     String expectedResult = 'Need review';
@@ -129,8 +116,9 @@ public class CandidateRelatedControllerTest {
       LIMIT 1
     ]
     .Id;
-    Candidate__c candidate = CandidateRelatedController.selectCandidateById(
-      candidateId
+    Candidate__c candidate = CandidateRelatedController.selectCandidateByIdAndFieldSet(
+      candidateId,
+      'All_Fields'
     );
     Test.stopTest();
 
@@ -147,7 +135,7 @@ public class CandidateRelatedControllerTest {
   @isTest
   static void testGetCustomMetadataDefaultForRelatedCandidate() {
     Test.startTest();
-    Related_Candidate_Setting__mdt defaultCustomMetadata = CandidateRelatedController.getCustomMetadataDefaultForRelatedCandidate();
+    Related_Candidate_Setting__mdt defaultCustomMetadata = CandidateRelatedController.getCustomMetadataForRelatedCandidate();
     Test.stopTest();
 
     Boolean expectedIsAvatarShown = true;

@@ -28,9 +28,12 @@ export default class CandidateAndJobApplicationModal extends LightningModal {
     Status,
     Created_By
   };
+  get isJobApplicationNameHided() {
+    return !this.isUnaccessableShowed && !this.jobApplication.Name;
+  }
 
   get fieldStyle() {
-    return this.isUnaccessableShowed || !this.jobApplication.Name
+    return this.isUnaccessableShowed && !this.jobApplication.Name
       ? "unaccessable-field"
       : "";
   }
