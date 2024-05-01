@@ -29,6 +29,13 @@
         <value>Candidate</value>
     </labels>
     <labels>
+        <fullName>Candidate_Per_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Candidate Per Page</shortDescription>
+        <value>Candidate Per Page</value>
+    </labels>
+    <labels>
         <fullName>Closed_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -41,6 +48,13 @@
         <protected>true</protected>
         <shortDescription>Created By</shortDescription>
         <value>Created By</value>
+    </labels>
+    <labels>
+        <fullName>Custom_Metadata_Type_Record</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Custom Metadata Type Record</shortDescription>
+        <value>Custom Metadata Type Record</value>
     </labels>
     <labels>
         <fullName>Default_Error_Title</fullName>
@@ -64,11 +78,53 @@
         <value>There are no records!</value>
     </labels>
     <labels>
+        <fullName>Field_Set_For_Candidate_Modal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Field Set For Candidate Modal</shortDescription>
+        <value>Field Set For Candidate Modal</value>
+    </labels>
+    <labels>
+        <fullName>Field_Set_For_Candidate_Tile</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Field Set For Candidate Tile</shortDescription>
+        <value>Field Set For Candidate Tile</value>
+    </labels>
+    <labels>
+        <fullName>Field_Set_For_Job_Application</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Field Set For Job Application</shortDescription>
+        <value>Field Set For Job Application</value>
+    </labels>
+    <labels>
+        <fullName>Fields</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fields</shortDescription>
+        <value>Fields</value>
+    </labels>
+    <labels>
         <fullName>Go_To_Details</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Go To Details</shortDescription>
         <value>Go to details</value>
+    </labels>
+    <labels>
+        <fullName>Is_Avatars_Shown</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Is Avatars Shown</shortDescription>
+        <value>Is Avatars Shown?</value>
+    </labels>
+    <labels>
+        <fullName>Is_Unaccessable_Shown</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Is Unaccessable Shown</shortDescription>
+        <value>Is Unaccessable Field Shown?</value>
     </labels>
     <labels>
         <fullName>Job_Application</fullName>
@@ -195,6 +251,20 @@
         <protected>true</protected>
         <shortDescription>Save Positions Title</shortDescription>
         <value>Save changed positions</value>
+    </labels>
+    <labels>
+        <fullName>Select_Metadata_Record</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select Metadata Record</shortDescription>
+        <value>Select Metadata Record</value>
+    </labels>
+    <labels>
+        <fullName>Select_Value</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select Value</shortDescription>
+        <value>Select Value</value>
     </labels>
     <labels>
         <fullName>Status</fullName>

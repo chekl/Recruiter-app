@@ -1,0 +1,69 @@
+<template>
+  <lightning-card label={labels.Custom_Metadata_Type_Record} hide-header>
+    <div
+      class="slds-var-p-around_large slds-grid slds-grid_vertical slds-grid_pull-padded-small"
+    >
+      <lightning-combobox
+        label={labels.Custom_Metadata_Type_Record}
+        value={selectedApiName}
+        placeholder={labels.Select_Metadata_Record}
+        options={typeRecordOptions}
+        onchange={handleTypeRecordChange}
+        class="slds-var-p-bottom_medium"
+      ></lightning-combobox>
+      <template if:true={selectedApiName}>
+        <form onsubmit={updateRecord}>
+          <c-picklist-for-metadata
+            fieldapiname="Field_Set_For_Candidate_Tile__c"
+            selected={fieldSetForCandidateTile}
+            label={labels.Field_Set_For_Candidate_Tile}
+            onchange={handleFieldSetCandidateTileChange}
+            objectapiname={objectApiNames.JOB_APPLICATION__C}
+          ></c-picklist-for-metadata>
+          <c-picklist-for-metadata
+            fieldapiname="Field_Set_For_Candidate_Modal__c"
+            selected={fieldSetForCandidateModal}
+            label={labels.Field_Set_For_Candidate_Modal}
+            onchange={handleFieldSetCandidateModalChange}
+            objectapiname={objectApiNames.CANDIDATE__C}
+          ></c-picklist-for-metadata>
+          <c-picklist-for-metadata
+            fieldapiname="Field_Set_For_Related_Job_Application__c"
+            selected={fieldSetForCandidateJobApplications}
+            label={labels.Field_Set_For_Job_Application}
+            onchange={handleFieldSetJobApplicationChange}
+            objectapiname={objectApiNames.JOB_APPLICATION__C}
+          ></c-picklist-for-metadata>
+          <lightning-input
+            type="checkbox"
+            label={labels.Is_Avatars_Shown}
+            checked={isAvatarsShowed}
+            onchange={handleIsAvatarShownChange}
+            class="slds-var-p-vertical_medium"
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label={labels.Is_Unaccessable_Shown}
+            checked={isUnaccessableShowed}
+            onchange={handleIsUnaccessableShowedChange}
+            class="slds-var-p-bottom_medium"
+          ></lightning-input>
+          <lightning-input
+            type="number"
+            label={labels.Candidate_Per_Page}
+            max="200"
+            min="1"
+            required
+            value={candidatePerPage}
+            onchange={handleCandidatePerPageChange}
+            class="slds-var-p-bottom_medium"
+          ></lightning-input>
+          <div class="slds-align_absolute-center">
+            <lightning-button variant="brand" type="submit" label={labels.Save}>
+            </lightning-button>
+          </div>
+        </form>
+      </template>
+    </div>
+  </lightning-card>
+</template>

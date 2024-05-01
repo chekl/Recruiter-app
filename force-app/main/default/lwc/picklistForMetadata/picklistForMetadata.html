@@ -1,0 +1,24 @@
+<template>
+  <div
+    class="slds-grid slds-gutters slds-border_bottom slds-var-p-vertical_medium"
+  >
+    <div class="slds-var-p-bottom_medium slds-col slds-size_1-of-2">
+      <lightning-combobox
+        label={label}
+        value={selected}
+        placeholder={labels.Select_Value}
+        options={options}
+        onchange={handleChange}
+      ></lightning-combobox>
+    </div>
+
+    <div class="slds-col slds-size_1-of-2">
+      <p>{labels.Fields}</p>
+      <ul class="slds-list_dotted">
+        <template for:each={fieldsList} for:item="field">
+          <li key={field}>{field}</li>
+        </template>
+      </ul>
+    </div>
+  </div>
+</template>

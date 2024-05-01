@@ -7,7 +7,7 @@ import { getPicklistValues } from "lightning/uiObjectInfoApi";
 import POSITION__C_OBJECT from "@salesforce/schema/Position__c";
 import STATUS__C_FIELD from "@salesforce/schema/Position__c.Status__c";
 import { refreshApex } from "@salesforce/apex";
-import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { showErrorToast } from "c/utils";
 
 import Positions from "@salesforce/label/c.Positions";
 import Title from "@salesforce/label/c.Title";
@@ -77,7 +77,7 @@ export default class PositionsList extends LightningElement {
     if (data) {
       this.positionObjectMetadata = data;
     } else if (error) {
-      this.showErrorToast(this.generateErrorMessage(error));
+      showErrorToast(error);
     }
   }
 
@@ -89,7 +89,7 @@ export default class PositionsList extends LightningElement {
     if (data) {
       this.positionStatus = data.values;
     } else if (error) {
-      this.showErrorToast(this.generateErrorMessage(error));
+      showErrorToast(error);
     }
   }
 
@@ -119,7 +119,7 @@ export default class PositionsList extends LightningElement {
         };
       });
     } else if (error) {
-      this.showErrorToast(this.generateErrorMessage(error));
+      showErrorToast(error);
     }
   }
 
@@ -130,7 +130,7 @@ export default class PositionsList extends LightningElement {
     if (data) {
       this.positionCount = data;
     } else if (error) {
-      this.showErrorToast(this.generateErrorMessage(error));
+      showErrorToast(error);
     }
   }
 
@@ -143,7 +143,7 @@ export default class PositionsList extends LightningElement {
         this.template.querySelector("c-custom-dt-type-lwc").draftValues = [];
         refreshApex(this.wiredActivities);
       })
-      .catch((error) => this.showErrorToast(error.body.message));
+      .catch((error) => showErrorToast(error));
   }
 
   handleStatusChange(event) {
@@ -161,15 +161,6 @@ export default class PositionsList extends LightningElement {
         this.positions[index].Status__c = updatedValue.Status__c;
       }
     });
-  }
-
-  showErrorToast(error) {
-    const event = new ShowToastEvent({
-      title: this.labels.Default_Error_Title,
-      variant: "Error",
-      message: error
-    });
-    this.dispatchEvent(event);
   }
 
   get options() {
@@ -191,17 +182,5 @@ export default class PositionsList extends LightningElement {
 
   handleSetCurrentPage(event) {
     this.currentPage = event.detail;
-  }
-
-  generateErrorMessage(error) {
-    let message;
-
-    if (Array.isArray(error.body)) {
-      message = error.body.map((e) => e.message).join(", ");
-    } else if (typeof error.body.message === "string") {
-      message = error.body.message;
-    }
-
-    return message;
   }
 }

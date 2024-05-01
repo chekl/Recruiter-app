@@ -8,7 +8,7 @@ import selectJobApplicationRelatedToCandidate from "@salesforce/apex/CandidateRe
 import selectCandidateByIdAndFieldSet from "@salesforce/apex/CandidateRelatedController.selectCandidateByIdAndFieldSet";
 import getCustomMetadataForRelatedCandidate from "@salesforce/apex/CandidateRelatedController.getCustomMetadataForRelatedCandidate";
 import CandidateAndJobApplicationModal from "c/candidateAndJobApplicationModal";
-import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { showErrorToast } from "c/utils";
 
 export default class CandidateRelated extends LightningElement {
   labels = { Related_Candidates, Empty_List };
@@ -42,7 +42,7 @@ export default class CandidateRelated extends LightningElement {
         data.Field_Set_For_Related_Job_Application__c;
       this.isBlockAccessed = true;
     } else if (error) {
-      this.showErrorToast(this.generateErrorMessage(error));
+      showErrorToast(error);
     }
   }
 
@@ -51,7 +51,7 @@ export default class CandidateRelated extends LightningElement {
     if (data) {
       this.candidateCount = data[0].expr0;
     } else if (error) {
-      this.showErrorToast(this.generateErrorMessage(error));
+      showErrorToast(error);
     }
   }
 
@@ -72,7 +72,7 @@ export default class CandidateRelated extends LightningElement {
         };
       });
     } else if (error) {
-      this.showErrorToast(this.generateErrorMessage(error));
+      showErrorToast(error);
     }
   }
 
@@ -122,27 +122,7 @@ export default class CandidateRelated extends LightningElement {
         });
       })
       .catch((error) => {
-        this.showErrorToast(this.generateErrorMessage(error));
+        showErrorToast(error);
       });
-  }
-
-  showErrorToast(error) {
-    const event = new ShowToastEvent({
-      title: this.labels.Default_Error_Title,
-      variant: "Error",
-      message: error
-    });
-    this.dispatchEvent(event);
-  }
-
-  generateErrorMessage(error) {
-    let errorMessage;
-    if (Array.isArray(error.body)) {
-      errorMessage = error.body.map((e) => e.message).join(", ");
-    } else if (typeof error.body.message === "string") {
-      errorMessage = error.body.message;
-    }
-
-    return errorMessage;
   }
 }
