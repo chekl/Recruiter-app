@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Interviewer Settings</label>
+    <protected>false</protected>
+    <values>
+        <field>Candidates_Per_Page__c</field>
+        <value xsi:type="xsd:double">2.0</value>
+    </values>
+    <values>
+        <field>Field_Set_For_Candidate_Modal__c</field>
+        <value xsi:type="xsd:string">All_Fields</value>
+    </values>
+    <values>
+        <field>Field_Set_For_Candidate_Tile__c</field>
+        <value xsi:type="xsd:string">Candidate_Tiles</value>
+    </values>
+    <values>
+        <field>Field_Set_For_Related_Job_Application__c</field>
+        <value xsi:type="xsd:string">Job_Application_Fields_For_Interviewer</value>
+    </values>
+    <values>
+        <field>Is_Avatars_Shown__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Is_Unaccessable_Shown__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

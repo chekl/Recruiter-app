@@ -5,7 +5,7 @@ import selectCountOfRelatedCandidates from "@salesforce/apex/CandidateRelatedCon
 import Related_Candidates from "@salesforce/label/c.Related_Candidates";
 import Empty_List from "@salesforce/label/c.Empty_List";
 import selectJobApplicationRelatedToCandidate from "@salesforce/apex/CandidateRelatedController.selectJobApplicationRelatedToCandidate";
-import selectCandidateById from "@salesforce/apex/CandidateRelatedController.selectCandidateById";
+import selectCandidateByIdAndFieldSet from "@salesforce/apex/CandidateRelatedController.selectCandidateByIdAndFieldSet";
 import getCustomMetadataDefaultForRelatedCandidate from "@salesforce/apex/CandidateRelatedController.getCustomMetadataDefaultForRelatedCandidate";
 import CandidateAndJobApplicationModal from "c/candidateAndJobApplicationModal";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
@@ -20,6 +20,11 @@ export default class CandidateRelated extends LightningElement {
   pageSize;
   @track candidateCount;
   isAvatarsShowed;
+  isUnaccessableShowed;
+  fieldSetForCandidateTile;
+  fieldSetForCandidateModal;
+  fieldSetForCandidateJobApplications;
+  isBlockAccessed = false;
 
   connectedCallback() {
     this.recordId = this.currentPageReference.attributes.recordId;
@@ -30,6 +35,12 @@ export default class CandidateRelated extends LightningElement {
     if (data) {
       this.pageSize = data.Candidates_Per_Page__c;
       this.isAvatarsShowed = data.Is_Avatars_Shown__c;
+      this.isUnaccessableShowed = data.Is_Unaccessable_Shown__c;
+      this.fieldSetForCandidateTile = data.Field_Set_For_Candidate_Tile__c;
+      this.fieldSetForCandidateModal = data.Field_Set_For_Candidate_Modal__c;
+      this.fieldSetForCandidateJobApplications =
+        data.Field_Set_For_Related_Job_Application__c;
+      this.isBlockAccessed = true;
     } else if (error) {
       this.showErrorToast(this.generateErrorMessage(error));
     }
@@ -83,10 +94,14 @@ export default class CandidateRelated extends LightningElement {
   openCandidateDetails(event) {
     const candidateId = event.target.dataset.candidate;
     Promise.all([
-      selectCandidateById({ candidateId }),
+      selectCandidateByIdAndFieldSet({
+        candidateId,
+        fieldSetName: this.fieldSetForCandidateModal
+      }),
       selectJobApplicationRelatedToCandidate({
         candidateId,
-        positionId: this.recordId
+        positionId: this.recordId,
+        fieldSetName: this.fieldSetForCandidateJobApplications
       })
     ])
       .then(([candidate, jobApplication]) => {
@@ -101,7 +116,8 @@ export default class CandidateRelated extends LightningElement {
             ownerUsername: candidate.CreatedBy.Username
           },
           jobApplication: { ...jobApplication, link: "/" + jobApplication.Id },
-          isAvatarsShowed: this.isAvatarsShowed
+          isAvatarsShowed: this.isAvatarsShowed,
+          isUnaccessableShowed: this.isUnaccessableShowed
         });
       })
       .catch((error) => {

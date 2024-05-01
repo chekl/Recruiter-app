@@ -60,9 +60,11 @@
 
     <lightning-card title={labels.Job_Application}>
       <div class="slds-var-m-horizontal_medium slds-grid slds-wrap">
-        <div class="slds-form-element slds-var-m-bottom_small slds-col">
-          <p class="slds-var-m-bottom_small">{labels.Job_Application}</p>
-          <a href={jobApplication.link}>{jobApplication.Id}</a>
+        <div class="slds-form-element slds-col">
+          <div class={fieldStyle}>
+            <p class="slds-var-m-bottom_small">{labels.Job_Application}</p>
+            <a href={jobApplication.link}>{jobApplication.Name}</a>
+          </div>
         </div>
         <lightning-input
           type="text"
