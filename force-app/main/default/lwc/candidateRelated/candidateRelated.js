@@ -65,8 +65,7 @@ export default class CandidateRelated extends LightningElement {
     if (data) {
       this.candidates = data.map((record) => {
         return {
-          id: record.Candidate__c,
-          email: record.Candidate__r.Email__c,
+          ...record,
           fullName: `${record.Candidate__r.First_Name__c} ${record.Candidate__r.Last_Name__c}`,
           link: "/" + record.Candidate__c
         };

@@ -7,14 +7,17 @@
             <template for:each={candidates} for:item="candidate">
               <lightning-tile
                 class="tile slds-col slds-var-p-around_small"
-                key={candidate.id}
+                key={candidate.Candidate__c}
                 label={candidate.fullName}
                 href={candidate.link}
-                data-candidate={candidate.id}
+                data-candidate={candidate.Candidate__c}
                 onclick={openCandidateDetails}
               >
-                <p data-candidate={candidate.id} class="slds-truncate">
-                  {candidate.email}
+                <p
+                  data-candidate={candidate.Candidate__c}
+                  class="slds-truncate"
+                >
+                  {candidate.Candidate__r.Email__c}
                 </p>
               </lightning-tile>
             </template>
