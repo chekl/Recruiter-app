@@ -11,7 +11,7 @@ import Is_Avatars_Shown from "@salesforce/label/c.Is_Avatars_Shown";
 import Is_Unaccessable_Shown from "@salesforce/label/c.Is_Unaccessable_Shown";
 import Msg_Record_Update from "@salesforce/label/c.Msg_Record_Update";
 import Fields from "@salesforce/label/c.Fields";
-import Save from "@salesforce/label/c.Save";
+import Save_Label from "@salesforce/label/c.Save";
 import updateCustomMetadataRecord from "@salesforce/apex/PageSettingsRelatedCandidatesController.updateCustomMetadataRecord";
 import { showErrorToast, showSuccessToast } from "c/utils";
 import { refreshApex } from "@salesforce/apex";
@@ -33,7 +33,7 @@ export default class PageSettingsForRelatedCandidatesBlock extends LightningElem
     Field_Set_For_Candidate_Modal,
     Field_Set_For_Job_Application,
     Fields,
-    Save,
+    Save_Label,
     Candidate_Per_Page,
     Is_Avatars_Shown,
     Is_Unaccessable_Shown,

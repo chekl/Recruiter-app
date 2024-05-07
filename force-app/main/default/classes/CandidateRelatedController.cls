@@ -32,10 +32,8 @@ public with sharing class CandidateRelatedController {
   ) {
     String query =
       'SELECT ' +
-      CandidateRelatedController.generateFieldsForQueryByFieldSet(
-        CandidateRelatedController.getJobApplicationFields(fieldSetName)
-      ) +
-      'Id FROM Job_Application__c WHERE Position__c = :positionId LIMIT :pageSize OFFSET :pageOffset';
+      generateFieldsForQueryByFieldSet(getJobApplicationFields(fieldSetName)) +
+      ' FROM Job_Application__c WHERE Position__c = :positionId LIMIT :pageSize OFFSET :pageOffset';
     return Database.query(query);
   }
 
@@ -47,10 +45,8 @@ public with sharing class CandidateRelatedController {
   ) {
     String query =
       'SELECT ' +
-      CandidateRelatedController.generateFieldsForQueryByFieldSet(
-        CandidateRelatedController.getJobApplicationFields(fieldSetName)
-      ) +
-      'Id FROM Job_Application__c WHERE Candidate__c = :candidateId AND Position__c = :positionId LIMIT 1';
+      generateFieldsForQueryByFieldSet(getJobApplicationFields(fieldSetName)) +
+      ' FROM Job_Application__c WHERE Candidate__c = :candidateId AND Position__c = :positionId LIMIT 1';
     return Database.query(query);
   }
 
@@ -74,7 +70,7 @@ public with sharing class CandidateRelatedController {
     for (Schema.FieldSetMember field : fields) {
       query += field.getFieldPath() + ', ';
     }
-    return query;
+    return query.removeEnd(', ');
   }
 
   @AuraEnabled(cacheable=true)
@@ -91,7 +87,7 @@ public with sharing class CandidateRelatedController {
     String query =
       'SELECT ' +
       generateFieldsForQueryByFieldSet(candidateFields) +
-      'Id FROM Candidate__c WHERE Id = :candidateId LIMIT 1';
+      ' FROM Candidate__c WHERE Id = :candidateId LIMIT 1';
     return Database.query(query);
   }
 
@@ -126,18 +122,12 @@ public with sharing class CandidateRelatedController {
   }
 
   private static Boolean userHasPermissionByName(String permissionName) {
-    AggregateResult[] results = [
-      SELECT COUNT(Id) total
-      FROM PermissionSetAssignment
-      WHERE
-        AssigneeId = :UserInfo.getUserId()
-        AND PermissionSet.Name = :permissionName
-    ];
-
-    Integer permissionCount = results.isEmpty()
-      ? 0
-      : (Integer) results[0].get('total');
-
-    return permissionCount > 0;
+    return [
+        SELECT COUNT()
+        FROM PermissionSetAssignment
+        WHERE
+          AssigneeId = :UserInfo.getUserId()
+          AND PermissionSet.Name = :permissionName
+      ] > 0;
   }
 }

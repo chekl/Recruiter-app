@@ -64,10 +64,8 @@ public with sharing class PageSettingsRelatedCandidatesController {
   public static List<String> getPicklistValues(String picklistField) {
     List<String> pickListValues = new List<String>();
 
-    Schema.SObjectType sobjType = Schema.getGlobalDescribe()
-      .get('Related_Candidate_Setting__mdt');
-
-    Schema.DescribeFieldResult fieldDescribe = sobjType.getDescribe()
+    Schema.DescribeFieldResult fieldDescribe = Related_Candidate_Setting__mdt.getSObjectType()
+      .getDescribe()
       .fields.getMap()
       .get(picklistField)
       .getDescribe();
