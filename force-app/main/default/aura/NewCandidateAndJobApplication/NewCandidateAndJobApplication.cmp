@@ -1,0 +1,66 @@
+<aura:component
+  controller="CandidateAndJobApplicationModal"
+  implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName"
+>
+  <aura:attribute name="candidateFields" type="String[]" access="private" />
+  <aura:attribute
+    name="jobApplicationFields"
+    type="String[]"
+    access="private"
+  />
+
+  <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+  <section
+    role="dialog"
+    tabindex="-1"
+    aria-modal="true"
+    aria-labelledby="modal-heading-01"
+    class="slds-modal slds-fade-in-open"
+  >
+    <div class="slds-modal__container">
+      <div class="slds-modal__header">
+        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+          {!$Label.c.Create_Candidate}
+        </h1>
+      </div>
+      <div class="slds-modal__content slds-grid slds-gutters">
+        <div class="slds-col">
+          <h2>{!$Label.c.Candidate}</h2>
+
+          <lightning:recordEditForm objectApiName="Candidate__c">
+            <lightning:messages />
+            <aura:iteration items="{!v.candidateFields}" var="candidateField">
+              <lightning:inputField
+                fieldName="{!candidateField}"
+                variant="standard"
+              ></lightning:inputField>
+            </aura:iteration>
+          </lightning:recordEditForm>
+        </div>
+        <div class="slds-col">
+          <h2>{!$Label.c.Job_Application}</h2>
+          <lightning:recordEditForm objectApiName="Job_Application__c">
+            <lightning:messages />
+            <aura:iteration
+              items="{!v.jobApplicationFields}"
+              var="jobApplicationField"
+            >
+              <lightning:inputField
+                fieldName="{!jobApplicationField}"
+                variant="standard"
+              ></lightning:inputField>
+            </aura:iteration>
+          </lightning:recordEditForm>
+        </div>
+      </div>
+      <div class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral">
+          {!$Label.c.Cancel}
+        </button>
+        <button class="slds-button slds-button_brand">{!$Label.c.Save}</button>
+      </div>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</aura:component>
