@@ -1,23 +1,22 @@
 public with sharing class CandidateAndJobApplicationModal {
-  @AuraEnabled
-  public static List<String> getCandidateForm() {
+  @AuraEnabled(cacheable=true)
+  public static Map<String, List<String>> getFormFields() {
     Create_Candidate_Setting__mdt mtd = getMetadata();
-    List<String> form = new List<String>();
-    for (Schema.FieldSetMember field : getCandidateFields(mtd.Candidate__c)) {
-      form.add(field.getFieldPath());
-    }
-    return form;
+    return new Map<String, List<String>>{
+      'jobApplicationFields' => generateFieldsArray(
+        getJobApplicationFields(mtd.Job_Application__c)
+      ),
+      'candidateFields' => generateFieldsArray(
+        getCandidateFields(mtd.Candidate__c)
+      )
+    };
   }
 
-  @AuraEnabled
-  public static List<String> getJobApplicationForm() {
-    Create_Candidate_Setting__mdt mtd = getMetadata();
+  private static List<String> generateFieldsArray(
+    List<Schema.FieldSetMember> fields
+  ) {
     List<String> form = new List<String>();
-    for (
-      Schema.FieldSetMember field : getJobApplicationFields(
-        mtd.Job_Application__c
-      )
-    ) {
+    for (Schema.FieldSetMember field : fields) {
       form.add(field.getFieldPath());
     }
     return form;
