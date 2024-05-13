@@ -99,13 +99,9 @@ export default class NewCandidateWithJobApplication extends NavigationMixin(
   }
 
   checkJobApplicationChanges(event) {
-    const field = {
-      fieldName: event.target.fieldName,
-      value: event.detail.value
-    };
-    this.jobApplicationInitial.forEach((f) => {
-      if (f.fieldName === field.fieldName) {
-        this.isJobApplicationChanged = f.value !== field.value;
+    this.jobApplicationInitial.forEach((field) => {
+      if (field.fieldName === event.target.fieldName) {
+        this.isJobApplicationChanged = field.value !== event.detail.value;
       }
     });
   }

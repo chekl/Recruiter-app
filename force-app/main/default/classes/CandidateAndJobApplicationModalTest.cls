@@ -5,15 +5,13 @@ private class CandidateAndJobApplicationModalTest {
     Test.startTest();
     Map<String, List<String>> formFields = CandidateAndJobApplicationModal.getFormFields();
     Test.stopTest();
-    Assert.areNotEqual(null, formFields, 'formFields is null');
+    Assert.isNotNull(formFields, 'formFields is null');
     Assert.areEqual(2, formFields.size(), 'formFields should contain two keys');
-    Assert.areNotEqual(
-      null,
+    Assert.isNotNull(
       formFields.get('jobApplicationFields'),
       'The job application fields should not be null'
     );
-    Assert.areNotEqual(
-      null,
+    Assert.isNotNull(
       formFields.get('candidateFields'),
       'The candidate fields should not be null'
     );
