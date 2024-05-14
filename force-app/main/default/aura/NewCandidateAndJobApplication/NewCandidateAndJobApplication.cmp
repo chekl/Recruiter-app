@@ -1,0 +1,7 @@
+<aura:component
+  controller="CandidateAndJobApplicationModal"
+  implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName"
+  access="global"
+>
+  <c:newCandidateWithJobApplication />
+</aura:component>

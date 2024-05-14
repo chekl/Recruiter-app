@@ -1,0 +1,75 @@
+<template>
+  <section
+    role="dialog"
+    tabindex="-1"
+    aria-modal="true"
+    class="slds-modal slds-fade-in-open slds-modal_large"
+  >
+    <div class="slds-modal__container">
+      <div class="slds-modal__header">
+        <h1 class="slds-modal__title slds-hyphenate">
+          {labels.Create_Candidate}
+        </h1>
+      </div>
+      <div class="slds-modal__content">
+        <div class="slds-grid slds-gutters slds-var-p-around_medium">
+          <div class="slds-col">
+            <h2 class="slds-text-title_caps slds-var-m-bottom_small">
+              {labels.Candidate}
+            </h2>
+            <lightning-record-edit-form
+              object-api-name={objectApiNames.candidate}
+              onsuccess={handleCandidateSuccess}
+              record-id={candidateId}
+              data-id="candidateForm"
+              onerror={handleFormError}
+            >
+              <template for:each={candidateFields} for:item="candidateField">
+                <lightning-input-field
+                  key={candidateField}
+                  field-name={candidateField}
+                  variant="standard"
+                ></lightning-input-field>
+              </template>
+            </lightning-record-edit-form>
+          </div>
+          <div class="slds-col">
+            <h2 class="slds-text-title_caps slds-var-m-bottom_small">
+              {labels.Job_Application}
+            </h2>
+            <lightning-record-edit-form
+              object-api-name={objectApiNames.jobApplication}
+              onsuccess={handleJobApplicationSuccess}
+              data-id="jobApplicationForm"
+              onerror={handleFormError}
+            >
+              <template
+                for:each={jobApplicationFields}
+                for:item="jobApplicationField"
+              >
+                <lightning-input-field
+                  key={jobApplicationField}
+                  field-name={jobApplicationField}
+                  variant="standard"
+                ></lightning-input-field>
+              </template>
+            </lightning-record-edit-form>
+          </div>
+        </div>
+      </div>
+      <div class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" onclick={handleCancel}>
+          {labels.Cancel_Label}
+        </button>
+        <button
+          class="slds-button slds-button_brand"
+          onclick={createCandidate}
+          type="submit"
+        >
+          {labels.Save_Label}
+        </button>
+      </div>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>
