@@ -1,15 +1,10 @@
 public with sharing class CandidateAndJobApplicationModal {
   @AuraEnabled(cacheable=true)
-  public static Map<String, List<String>> getFormFields() {
+  public static List<String> getFormFieldsByObjectType(String sObjectType) {
     Create_Candidate_Setting__mdt mtd = getMetadata();
-    return new Map<String, List<String>>{
-      'jobApplicationFields' => generateFieldsArray(
-        getJobApplicationFields(mtd.Job_Application__c)
-      ),
-      'candidateFields' => generateFieldsArray(
-        getCandidateFields(mtd.Candidate__c)
-      )
-    };
+    return generateFieldsArray(
+      getFieldSetFields(sObjectType, (String) mtd.get(sObjectType))
+    );
   }
 
   private static List<String> generateFieldsArray(
@@ -22,30 +17,21 @@ public with sharing class CandidateAndJobApplicationModal {
     return form;
   }
 
-  private static List<Schema.FieldSetMember> getJobApplicationFields(
+  private static List<Schema.FieldSetMember> getFieldSetFields(
+    String sObjectType,
     String fieldSetName
   ) {
-    Schema.DescribeSObjectResult jobApplicationDescribe = Job_Application__c.SObjectType.getDescribe();
-    Schema.FieldSet jobApplicationFieldSet = jobApplicationDescribe.fieldSets.getMap()
-      .get(fieldSetName);
-    if (jobApplicationFieldSet != null) {
-      return jobApplicationFieldSet.getFields();
-    } else {
+    Schema.SObjectType sObjectTypeToken = Schema.getGlobalDescribe()
+      .get(sObjectType);
+    if (sObjectTypeToken == null) {
       return new List<Schema.FieldSetMember>();
     }
-  }
-
-  private static List<Schema.FieldSetMember> getCandidateFields(
-    String fieldSetName
-  ) {
-    Schema.DescribeSObjectResult candidateDescribe = Candidate__c.SObjectType.getDescribe();
-    Schema.FieldSet candidateFieldSet = candidateDescribe.fieldSets.getMap()
+    Schema.DescribeSObjectResult sObjectDescribe = sObjectTypeToken.getDescribe();
+    Schema.FieldSet fieldSet = sObjectDescribe.fieldSets.getMap()
       .get(fieldSetName);
-    if (candidateFieldSet != null) {
-      return candidateFieldSet.getFields();
-    } else {
-      return new List<Schema.FieldSetMember>();
-    }
+    return fieldSet != null
+      ? fieldSet.getFields()
+      : new List<Schema.FieldSetMember>();
   }
 
   private static Create_Candidate_Setting__mdt getMetadata() {

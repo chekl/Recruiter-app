@@ -1,5 +1,5 @@
-import { LightningElement, wire } from "lwc";
-import getFormFields from "@salesforce/apex/CandidateAndJobApplicationModal.getFormFields";
+import { LightningElement } from "lwc";
+import getFormFieldsByObjectType from "@salesforce/apex/CandidateAndJobApplicationModal.getFormFieldsByObjectType";
 import { NavigationMixin } from "lightning/navigation";
 import { showErrorToast, showSuccessToast } from "c/utils";
 import Create_Candidate from "@salesforce/label/c.Create_Candidate";
@@ -26,17 +26,17 @@ export default class NewCandidateWithJobApplication extends NavigationMixin(
   };
   candidateFields = [];
   jobApplicationFields = [];
-  isJobApplicationChanged = false;
-  jobApplicationInitial;
   candidateId;
 
-  @wire(getFormFields) FormFields({ data, error }) {
-    if (data) {
-      this.candidateFields = data.candidateFields;
-      this.jobApplicationFields = data.jobApplicationFields;
-    } else if (error) {
-      showErrorToast(error);
-    }
+  connectedCallback() {
+    getFormFieldsByObjectType({ sObjectType: "Candidate__c" })
+      .then((fields) => (this.candidateFields = fields))
+      .catch((error) => showErrorToast(error));
+    getFormFieldsByObjectType({
+      sObjectType: "Job_Application__c"
+    })
+      .then((fields) => (this.jobApplicationFields = fields))
+      .catch((error) => showErrorToast(error));
   }
 
   handleReset() {
@@ -59,8 +59,7 @@ export default class NewCandidateWithJobApplication extends NavigationMixin(
     });
   }
 
-  createCandidate(event) {
-    event.preventDefault();
+  createCandidate() {
     this.template
       .querySelector("lightning-record-edit-form[data-id=candidateForm]")
       .submit();

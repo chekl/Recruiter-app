@@ -21,10 +21,16 @@ export function showSuccessToast(message) {
 
 export function generateErrorMessage(error) {
   let errorMessage;
-  if (Array.isArray(error.body)) {
-    errorMessage = error.body.map((e) => e.message).join(", ");
-  } else if (typeof error.body.message === "string") {
-    errorMessage = error.body.message;
+  if (error.detail) {
+    errorMessage = error.detail.message;
+  } else if (error.body) {
+    if (Array.isArray(error.body)) {
+      errorMessage = error.body.map((e) => e.message).join(", ");
+    } else if (typeof error.body.message === "string") {
+      errorMessage = error.body.message;
+    }
+  } else {
+    errorMessage = "";
   }
 
   return errorMessage;
