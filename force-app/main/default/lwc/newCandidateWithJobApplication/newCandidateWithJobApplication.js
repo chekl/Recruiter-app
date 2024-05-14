@@ -34,11 +34,6 @@ export default class NewCandidateWithJobApplication extends NavigationMixin(
     if (data) {
       this.candidateFields = data.candidateFields;
       this.jobApplicationFields = data.jobApplicationFields;
-      this.jobApplicationInitial = data.jobApplicationFields.map(
-        (fieldName) => {
-          return { value: null, fieldName };
-        }
-      );
     } else if (error) {
       showErrorToast(error);
     }
@@ -64,7 +59,8 @@ export default class NewCandidateWithJobApplication extends NavigationMixin(
     });
   }
 
-  createCandidate() {
+  createCandidate(event) {
+    event.preventDefault();
     this.template
       .querySelector("lightning-record-edit-form[data-id=candidateForm]")
       .submit();
@@ -72,14 +68,31 @@ export default class NewCandidateWithJobApplication extends NavigationMixin(
 
   handleCandidateSuccess(event) {
     this.candidateId = event.detail.id;
-    if (this.isJobApplicationChanged) {
-      this.template
-        .querySelector("lightning-record-edit-form[data-id=jobApplicationForm]")
-        .submit();
+    const form = this.template.querySelector(
+      "lightning-record-edit-form[data-id=jobApplicationForm]"
+    );
+    let isApplicationChanged = false;
+    const fields = [...form.querySelectorAll("lightning-input-field")].reduce(
+      (acc, field) => {
+        if (field.value) {
+          isApplicationChanged = true;
+        }
+        acc[field.fieldName] = field.value;
+        return acc;
+      },
+      {}
+    );
+    fields.Candidate__c = event.detail.id;
+    if (isApplicationChanged) {
+      form.submit(fields);
     } else {
       this.handleReset();
       this.navigateToCandidate();
     }
+  }
+
+  handleFormError(event) {
+    showErrorToast(event);
   }
 
   handleJobApplicationSuccess() {
@@ -94,14 +107,6 @@ export default class NewCandidateWithJobApplication extends NavigationMixin(
       attributes: {
         objectApiName: this.objectApiNames.candidate,
         actionName: "home"
-      }
-    });
-  }
-
-  checkJobApplicationChanges(event) {
-    this.jobApplicationInitial.forEach((field) => {
-      if (field.fieldName === event.target.fieldName) {
-        this.isJobApplicationChanged = field.value !== event.detail.value;
       }
     });
   }

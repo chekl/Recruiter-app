@@ -22,8 +22,8 @@
               onsuccess={handleCandidateSuccess}
               record-id={candidateId}
               data-id="candidateForm"
+              onerror={handleFormError}
             >
-              <lightning-messages></lightning-messages>
               <template for:each={candidateFields} for:item="candidateField">
                 <lightning-input-field
                   key={candidateField}
@@ -41,15 +41,8 @@
               object-api-name={objectApiNames.jobApplication}
               onsuccess={handleJobApplicationSuccess}
               data-id="jobApplicationForm"
+              onerror={handleFormError}
             >
-              <lightning-messages></lightning-messages>
-              <lightning-input-field
-                field-name="Candidate__c"
-                variant="standard"
-                value={candidateId}
-                disabled
-                hidden
-              ></lightning-input-field>
               <template
                 for:each={jobApplicationFields}
                 for:item="jobApplicationField"
@@ -57,7 +50,6 @@
                 <lightning-input-field
                   key={jobApplicationField}
                   field-name={jobApplicationField}
-                  onchange={checkJobApplicationChanges}
                   variant="standard"
                 ></lightning-input-field>
               </template>
