@@ -18,15 +18,15 @@ public with sharing class CandidateAndJobApplicationModal {
   }
 
   private static List<Schema.FieldSetMember> getFieldSetFields(
-    String sObjectType,
+    String sObjectApiName,
     String fieldSetName
   ) {
-    Schema.SObjectType sObjectTypeToken = Schema.getGlobalDescribe()
-      .get(sObjectType);
-    if (sObjectTypeToken == null) {
+    Schema.SObjectType sObjectType = Schema.getGlobalDescribe()
+      .get(sObjectApiName);
+    if (sObjectType == null) {
       return new List<Schema.FieldSetMember>();
     }
-    Schema.DescribeSObjectResult sObjectDescribe = sObjectTypeToken.getDescribe();
+    Schema.DescribeSObjectResult sObjectDescribe = sObjectType.getDescribe();
     Schema.FieldSet fieldSet = sObjectDescribe.fieldSets.getMap()
       .get(fieldSetName);
     return fieldSet != null
