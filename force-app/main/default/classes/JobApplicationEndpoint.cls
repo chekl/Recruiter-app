@@ -1,4 +1,4 @@
-@RestResource(UrlMapping='/endpoint/*')
+@RestResource(UrlMapping='/JobApplication/*')
 global with sharing class JobApplicationEndpoint {
   @HttpGet
   global static void getJobApplicationDetails() {
