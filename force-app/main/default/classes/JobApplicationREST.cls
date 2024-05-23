@@ -141,19 +141,12 @@ global with sharing class JobApplicationREST {
     Map<String, Schema.SObjectField> jobApplicationFields = Job_Application__c.SObjectType.getDescribe()
       .fields.getMap();
 
-    List<String> invalidFieldNames = new List<String>();
-
     for (String fieldName : fieldNames) {
       if (!jobApplicationFields.containsKey(fieldName)) {
-        invalidFieldNames.add(fieldName);
+        throw new CustomException(
+          'Invalid field for Job Application object: ' + fieldName
+        );
       }
-    }
-
-    if (!invalidFieldNames.isEmpty()) {
-      throw new CustomException(
-        'Invalid field(s) for Job Application object: ' +
-        String.join(invalidFieldNames, ', ')
-      );
     }
   }
 }
