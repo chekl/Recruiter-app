@@ -17,9 +17,9 @@ global with sharing class JobApplicationREST {
       );
 
       validateListSize(jobApplication);
-      setSuccessResponse(jobApplication.get(0), 200);
+      RestHelpers.setSuccessResponse(jobApplication.get(0), 200);
     } catch (Exception e) {
-      setExceptionResponse(e);
+      RestHelpers.setExceptionResponse(e);
     }
   }
 
@@ -43,9 +43,9 @@ global with sharing class JobApplicationREST {
 
       insert newJobApplication;
 
-      setSuccessResponse(newJobApplication, 200);
+      RestHelpers.setSuccessResponse(newJobApplication, 200);
     } catch (Exception e) {
-      setExceptionResponse(e);
+      RestHelpers.setExceptionResponse(e);
     }
   }
 
@@ -74,9 +74,9 @@ global with sharing class JobApplicationREST {
 
       update jobApplicationToUpdate;
 
-      setSuccessResponse(jobApplicationToUpdate.get(0), 200);
+      RestHelpers.setSuccessResponse(jobApplicationToUpdate.get(0), 200);
     } catch (Exception e) {
-      setExceptionResponse(e);
+      RestHelpers.setExceptionResponse(e);
     }
   }
 
@@ -95,31 +95,10 @@ global with sharing class JobApplicationREST {
       validateListSize(jobApplication);
 
       delete jobApplication;
-      setSuccessResponse(jobApplication, 200);
+      RestHelpers.setSuccessResponse(jobApplication, 200);
     } catch (Exception e) {
-      setExceptionResponse(e);
+      RestHelpers.setExceptionResponse(e);
     }
-  }
-
-  private static void setExceptionResponse(Exception e) {
-    Map<String, String> responseMap = new Map<String, String>{
-      'message' => e.getMessage()
-    };
-    RestContext.response.responseBody = Blob.valueOf(
-      JSON.serialize(responseMap)
-    );
-    RestContext.response.statusCode = 400;
-  }
-
-  private static void setSuccessResponse(
-    Object responseBody,
-    Integer statusCode
-  ) {
-    RestContext.response.addHeader('Content-Type', 'application/json');
-    RestContext.response.responseBody = Blob.valueOf(
-      JSON.serialize(responseBody)
-    );
-    RestContext.response.statusCode = statusCode;
   }
 
   private static void validateJobApplicationId(Id id) {
