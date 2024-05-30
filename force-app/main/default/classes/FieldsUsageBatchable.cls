@@ -9,9 +9,32 @@ public class FieldsUsageBatchable implements Database.Batchable<SObject>, Databa
   }
 
   public Database.QueryLocator start(Database.BatchableContext bc) {
-    return Database.getQueryLocator(
-      'SELECT ' + String.join(this.fieldNames, ',') + ' FROM ' + this.objectName
-    );
+    Integer batchSize = 500;
+    List<String> currentFields = new List<String>();
+    Integer index = 0;
+
+    while (index < this.fieldNames.size()) {
+      currentFields.clear();
+
+      for (
+        Integer i = index;
+        i < Math.min(index + batchSize, this.fieldNames.size());
+        i++
+      ) {
+        currentFields.add(this.fieldNames[i]);
+      }
+
+      String query =
+        'SELECT ' +
+        String.join(currentFields, ',') +
+        ' FROM ' +
+        this.objectName;
+      Database.QueryLocator batchQueryLocator = Database.getQueryLocator(query);
+      index += batchSize;
+      return batchQueryLocator;
+    }
+
+    return null;
   }
 
   public void execute(Database.BatchableContext bc, List<SObject> scope) {
