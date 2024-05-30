@@ -14,47 +14,10 @@ global with sharing class FieldsREST {
         throw new CustomException('Object Name is not exist');
       }
 
-      List<Schema.SObjectField> fields = objectType.getDescribe()
-        .fields.getMap()
-        .values();
-      List<String> fieldNames = new List<String>();
+      FieldsUsageBatchable batchable = new FieldsUsageBatchable(objectName);
+      Database.executeBatch(batchable);
 
-      for (Schema.SObjectField field : fields) {
-        fieldNames.add(String.valueOf(field));
-      }
-
-      String query =
-        'SELECT ' +
-        String.join(fieldNames, ',') +
-        ' FROM ' +
-        objectName;
-      List<SObject> records = Database.query(query);
-
-      Integer totalRecords = records.size();
-      if (totalRecords == 0) {
-        throw new CustomException('There are no records for this object');
-      }
-
-      Map<String, String> fieldUsage = new Map<String, String>();
-      for (Schema.SObjectField field : fields) {
-        Integer filledRecords = 0;
-        for (SObject record : records) {
-          Object recordField = record.get(field);
-          if (recordField != null) {
-            if (recordField instanceof Boolean && !((Boolean) recordField)) {
-              continue;
-            }
-            filledRecords++;
-          }
-        }
-        Decimal percentage = (Decimal) filledRecords / totalRecords * 100;
-        fieldUsage.put(
-          field.getDescribe().getName(),
-          percentage.setscale(1).format() + '%'
-        );
-      }
-
-      RestHelpers.setSuccessResponse(fieldUsage, 200);
+      RestHelpers.setSuccessResponse('Check email', 200);
     } catch (Exception e) {
       RestHelpers.setExceptionResponse(e);
     }
