@@ -67,16 +67,29 @@ public class FieldsUsageBatchable implements Database.Batchable<SObject>, Databa
     }
 
     if (!this.countingFields.isEmpty()) {
-      List<AggregateResult> countResult = Database.query(
-        'SELECT ' +
-          getContingString(this.countingFields) +
+      for (Integer i = 0; i < this.countingFields.size(); i += 100) {
+        List<String> subFields = new List<String>();
+        for (
+          Integer j = i; j < Math.min(i + 100, this.countingFields.size()); j++
+        ) {
+          subFields.add(this.countingFields[j]);
+        }
+        String query =
+          'SELECT ' +
+          getContingString(subFields) +
           ' FROM ' +
-          this.objectName
-      );
-      for (Integer i = 0; i < countResult.size(); i++) {
-        String fieldName = 'expr' + i;
-        Integer fieldValue = (Integer) countResult[i].get(fieldName);
-        fieldUsage.put(this.countingFields[i], fieldValue + '%');
+          this.objectName;
+        List<AggregateResult> countResults = Database.query(query);
+
+        if (countResults.isEmpty()) {
+          continue;
+        }
+
+        for (Integer j = 0; j < countResults.size(); j++) {
+          String fieldName = 'expr' + j;
+          Integer fieldValue = (Integer) countResults[j].get(fieldName);
+          fieldUsage.put(this.countingFields[j], fieldValue + '%');
+        }
       }
     }
 
@@ -87,7 +100,10 @@ public class FieldsUsageBatchable implements Database.Batchable<SObject>, Databa
 
       for (String fieldName : this.nonCountingFields) {
         Decimal filledRecords = this.filledRecordsMap.get(fieldName) ?? 0;
-        Decimal percentage = (Decimal) filledRecords / totalRecords * 100;
+        Decimal percentage = 0;
+        if (totalRecords > 0) {
+          percentage = (Decimal) filledRecords / totalRecords * 100;
+        }
         fieldUsage.put(fieldName, percentage.setScale(1).format() + '%');
       }
     }

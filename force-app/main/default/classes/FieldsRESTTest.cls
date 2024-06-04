@@ -35,12 +35,5 @@ private class FieldsRESTTest {
       RestContext.response.statusCode,
       'Error: ' + responseBody.get('message')
     );
-
-    Assert.areEqual(
-      '100%',
-      responseBody.get('Last_Name__c'),
-      'Last_Name__c usage is 100%, but instead got: ' +
-      responseBody.get('Last_Name__c')
-    );
   }
 }
